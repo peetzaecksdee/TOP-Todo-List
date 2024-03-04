@@ -19,6 +19,8 @@
   --side-info-width: 12vw;
   --main-width: calc(100vw - var(--nav-width) + var(--side-info-width));
   --button-hover: #353535;
+  --block-before-color: #76b9ed;
+  --hr-color: #333333;
 }
 
 * {
@@ -27,13 +29,37 @@
   box-sizing: border-box;
 }
 
+hr {
+  color: var(--hr-color);
+  margin: 4px 0;
+}
+
 button {
   background: none;
   border: none;
   color: white; 
   text-align: start;
   font-size: .9rem;
-  padding: 8px;
+  padding: 12px 16px;
+  width: 100%;
+  border-radius: 8px;
+  position: relative;
+}
+
+.active {
+  background-color: var(--button-hover);
+}
+
+button.active::before {
+  content: '';
+  background-color: var(--block-before-color);
+  width: 3px;
+  height: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50px;
+  left: 2px;
+  position: absolute;
 }
 
 button:hover {
@@ -68,16 +94,10 @@ nav {
   height: 100%;
   width: var(--nav-width);
   background-color: var(--side-color);
+  padding: 4px;
 
   display: flex;
   justify-content: space-between;
-  flex-direction: column;
-}
-
-#defaultProjects {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
 }
 
@@ -92,8 +112,19 @@ nav {
   font-size: 1.5rem;
 }
 
-#myDay {
-  
+/* Default Projects */
+
+#defaultProjects {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#defaultProjects > button {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* Footer contents */
@@ -127,4 +158,26 @@ footer img {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
+}
+
+/* Icon Styling */
+
+.fa-regular, .fa-solid {
+  padding-right: 12px;
+}
+
+.fa-sun {
+  color: orange;
+}
+
+.fa-star {
+  color: yellow;
+}
+
+.fa-list-check {
+  color: cyan;
+}
+
+.fa-house {
+  color: aliceblue;
 }
