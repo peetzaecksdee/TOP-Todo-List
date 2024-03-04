@@ -3,31 +3,48 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="style.css" />
+		<script
+			src="https://kit.fontawesome.com/2829d2b896.js"
+			crossorigin="anonymous"
+		></script>
 		<title>Your-List</title>
 	</head>
 	<body>
-    <div id="content">
-      <nav>
-        <div id="projects">
-          <div id="defaultProjects">
-            <button id="myDay"><span>🔆</span>My Day</button>
-            <button id="important"></button>
-            <button id="planned"></button>
-            <button id="tasks"></button>
-          </div>
-          <div id="userProjects"></div>
-        </div>
-        <button id="addProject">New list</button>
-      </nav>
-      <main></main>
-      <div></div>
-    </div>
-    <footer>
-      <span>Another day, Another project</span>
-      <a href="https://github.com/peetzaecksdee">
-        <img src="./assets/images/pizza.jpg" alt="my profile">
-      </a>
-    </footer>
-  </body>
+		<div id="content">
+			<nav>
+				<div id="projects">
+					<div id="defaultProjects">
+						<button id="myDay" class="active">
+							<div><i class="fa-regular fa-sun"></i>My Day</div>
+							<span data-count>1</span>
+						</button>
+						<button id="starred">
+              <div><i class="fa-regular fa-star"></i>Starred</div>
+              <span data-count></span>
+            </button>
+						<button id="planned">
+              <div><i class="fa-solid fa-list-check"></i>Planned</div>
+              <span data-count></span>
+            </button>
+						<button id="tasks">
+              <div><i class="fa-solid fa-house"></i>Tasks</div>
+              <span data-count></span>
+            </button>
+					</div>
+          <hr>
+					<div id="userProjects"></div>
+				</div>
+				<button id="addProject">New list</button>
+			</nav>
+			<main></main>
+			<div></div>
+		</div>
+		<footer>
+			<span>Another day, Another project</span>
+			<a href="https://github.com/peetzaecksdee">
+				<img src="./assets/images/pizza.jpg" alt="my profile" />
+			</a>
+		</footer>
+	</body>
 </html>
