@@ -1,5 +1,6 @@
-import Todo from './Objects/Todo'
+import Todo from './Objects/Todo.js';
+import Project from './Objects/Project.js';
 
-const newTodo = new Todo(1, "a", Date.now());
-console.log(newTodo);
+const newProject = Project(1, "geeza mama");
+console.log(newProject);
 console.log("hello guys. what is this project?");
