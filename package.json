@@ -1,0 +1,19 @@
+{
+  "name": "top-todo-list",
+  "module": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "date-fns": "^3.3.1"
+  }
+}
