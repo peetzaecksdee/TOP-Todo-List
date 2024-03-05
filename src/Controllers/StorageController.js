@@ -3,5 +3,5 @@ export function saveData(key, data) {
 }
 
 export function loadData(key) {
-  return localStorage.getItem(key) || [];
+  return localStorage.getItem(key);
 }
