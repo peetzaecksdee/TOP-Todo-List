@@ -1,25 +1,25 @@
 /**
  *
  * @param {number} id
- * @param {string} title
- * @param {Date} date
- * @param {Date?} dueDate
- * @param {string?} notes
- * @param {boolean} starred
  * @param {number} projectId
- * @param {boolean} done
+ * @param {string} title
+ * @param {Date?} date
+ * @param {string?} notes
+ * @param {boolean?} starred
+ * @param {boolean?} done
  */
 
 export default function (
 	id = 1,
+	projectId,
 	title,
 	date,
-	dueDate = null,
 	notes = "",
 	starred = false,
-	projectId,
 	done = false
 ) {
+	const dueDate = Date.now();
+
 	const getId = () => id;
 	const getTitle = () => title;
 	const getDate = () => date;
@@ -45,9 +45,9 @@ export default function (
 		done = newState;
 	};
 
-	const toObject = () => {
-		id, title, date, dueDate, notes, starred, projectId, done;
-	};
+	const toObject = () => ({
+		id, title, date, notes, starred, projectId, done,
+	});
 
 	return Object.assign(
 		{},
