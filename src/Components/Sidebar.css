@@ -13,6 +13,7 @@ nav {
   display: flex;
   align-items: center;
   gap: 18px;
+  padding: 6px 10px;
 }
 
 #addProject::before {
@@ -30,9 +31,14 @@ nav {
   gap: 4px;
 }
 
-#defaultProjects > button {
+#project {
   display: flex;
   justify-content: space-between;
+  transition: 100ms ease-out;
+}
+
+#project:active {
+  transform: scale(.98);
 }
 
 /* Icon Styling */

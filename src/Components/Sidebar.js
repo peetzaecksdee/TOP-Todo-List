@@ -1,19 +1,19 @@
 {/* <nav>
   <div id="projects">
     <div id="defaultProjects">
-      <button id="myDay" class="active">
+      <button id="project" class="active">
         <div><i class="fa-regular fa-sun"></i>My Day</div>
         <span data-count></span>
       </button>
-      <button id="starred">
+      <button id="project">
         <div><i class="fa-regular fa-star"></i>Starred</div>
         <span data-count></span>
       </button>
-      <button id="planned">
+      <button id="project">
         <div><i class="fa-solid fa-list-check"></i>Planned</div>
         <span data-count></span>
       </button>
-      <button id="tasks">
+      <button id="project">
         <div><i class="fa-solid fa-house"></i>Tasks</div>
         <span data-count></span>
       </button>
@@ -26,9 +26,9 @@
 
 import './Sidebar.css';
 
-function defaultProjectButton(id, opac, icon, text) {
+function defaultProjectButton(opac, icon, text) {
   const defProj = document.createElement('button');
-  defProj.id = id;
+  defProj.id = "project";
 
   const div = document.createElement('div');
 
@@ -50,6 +50,16 @@ function defaultProjectButton(id, opac, icon, text) {
   return defProj;
 }
 
+function setActive(button) {
+  const buttons = document.querySelectorAll('#project');
+  buttons.forEach((btn) => {
+    if (btn !== button) {
+      btn.classList.remove('active');
+    }
+    button.classList.add('active');
+  });
+}
+
 export default function() {
   const nav = document.createElement('nav');
 
@@ -59,11 +69,39 @@ export default function() {
   const defaultProjects = document.createElement('div');
   defaultProjects.id = 'defaultProjects';
 
-  const myDay = defaultProjectButton('myDay', 'fa-regular', 'fa-sun', 'My Day');
+  const myDay = defaultProjectButton('fa-regular', 'fa-sun', 'My Day');
   myDay.classList.add('active');
-  const starred = defaultProjectButton('starred', 'fa-regular', 'fa-star', 'Starred');
-  const planned = defaultProjectButton('planned', 'fa-solid', 'fa-list-check', 'Planned');
-  const tasks = defaultProjectButton('tasks', 'fa-solid', 'fa-house', 'Tasks');
+  myDay.addEventListener('click', () => {
+    if (myDay.classList.contains('active')) {
+      return;
+    }
+
+    setActive(myDay);
+  });
+  const starred = defaultProjectButton('fa-regular', 'fa-star', 'Starred');
+  starred.addEventListener('click', () => {
+    if (starred.classList.contains('active')) {
+      return;
+    }
+
+    setActive(starred);
+  });
+  const planned = defaultProjectButton('fa-solid', 'fa-list-check', 'Planned');
+  planned.addEventListener('click', () => {
+    if (planned.classList.contains('active')) {
+      return;
+    }
+
+    setActive(planned);
+  });
+  const tasks = defaultProjectButton('fa-solid', 'fa-house', 'Tasks');
+  tasks.addEventListener('click', () => {
+    if (tasks.classList.contains('active')) {
+      return;
+    }
+
+    setActive(tasks);
+  });
 
   const hr = document.createElement('hr');
 
@@ -72,6 +110,7 @@ export default function() {
 
   const addProjectBtn = document.createElement('button');
   addProjectBtn.id = 'addProject';
+  addProjectBtn.textContent = 'New List';
 
   defaultProjects.appendChild(myDay);
   defaultProjects.appendChild(starred);
