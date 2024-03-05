@@ -15,7 +15,7 @@ function loadFooter() {
   text.classList.add('credit')
 
   const githubPage = document.createElement('a');
-  githubPage.href = 'https://github.com/peetzaeckdsee';
+  githubPage.href = 'https://github.com/peetzaecksdee';
   githubPage.classList.add('credit-a')
 
   const githubImage = document.createElement('img');
