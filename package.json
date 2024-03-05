@@ -1,9 +1,10 @@
 {
   "name": "top-todo-list",
   "module": "index.js",
-  "type": "module",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "pushtree": "git subtree push --prefix dist origin gh-pages",
+    "start": "webpack serve --open"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -14,6 +15,9 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "date-fns": "^3.3.1"
+    "css-loader": "^6.10.0",
+    "date-fns": "^3.3.1",
+    "style-loader": "^3.3.4",
+    "webpack-dev-server": "^5.0.2"
   }
 }
