@@ -4,7 +4,17 @@ import Sidebar from '../Components/Sidebar.js';
 import { loadProjects } from './ProjectController.js';
 import { ProjectButton } from '../utils';
 
-export function renderUserProjects() {
+function setActive(button) {
+	const buttons = document.querySelectorAll(".project");
+	buttons.forEach((btn) => {
+		if (btn !== button) {
+			btn.classList.remove("active");
+		}
+		button.classList.add("active");
+	});
+}
+
+export function renderProjects() {
   const Projects = loadProjects();
   const userProjects = document.querySelector('#userProjects');
   userProjects.textContent = '';
@@ -13,6 +23,17 @@ export function renderUserProjects() {
     const btn = ProjectButton('fa-solid', 'fa-bars', project.getTitle());
     userProjects.appendChild(btn);
   });
+
+  const projectButtons = document.querySelectorAll('.project');
+  projectButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (btn.classList.contains("active")) {
+        return;
+      }
+      
+      setActive(btn);
+    });
+  })  
 }
 
 export function init() {
@@ -23,5 +44,5 @@ export function init() {
   const body = document.querySelector('body');
   body.appendChild(Footer());
 
-  renderUserProjects();
+  renderProjects();
 }

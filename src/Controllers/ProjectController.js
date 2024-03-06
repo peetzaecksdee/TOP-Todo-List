@@ -8,9 +8,7 @@ export function loadProjects() {
   return projectsData.map((data) => {
     const project = Project(data.id, data.title);
 
-    data.todos.forEach((todo) => {
-      project.addTodo(Todo(...todo));
-    });
+    loadTodos(project, data.todos);
     return project
   });
 }
@@ -34,6 +32,8 @@ export function addProject(name) {
   LoadedProjects.push(newProject);
 
   saveProjects(LoadedProjects);
+
+  return newProject
 }
 
 export function removeProject(projectId) {

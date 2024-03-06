@@ -28,18 +28,8 @@
 
 import "./Sidebar.css";
 import { addProject } from "../Controllers/ProjectController";
-import { renderUserProjects } from "../Controllers/RenderController";
+import { renderProjects } from "../Controllers/RenderController";
 import { ProjectButton } from "../utils";
-
-function setActive(button) {
-	const buttons = document.querySelectorAll("#project");
-	buttons.forEach((btn) => {
-		if (btn !== button) {
-			btn.classList.remove("active");
-		}
-		button.classList.add("active");
-	});
-}
 
 export default function () {
 	const nav = document.createElement("nav");
@@ -52,37 +42,8 @@ export default function () {
 
 	const myDay = ProjectButton("fa-regular", "fa-sun", "My Day");
 	myDay.classList.add("active");
-	myDay.addEventListener("click", () => {
-		if (myDay.classList.contains("active")) {
-			return;
-		}
-
-		setActive(myDay);
-	});
 	const starred = ProjectButton("fa-regular", "fa-star", "Starred");
-	starred.addEventListener("click", () => {
-		if (starred.classList.contains("active")) {
-			return;
-		}
-
-		setActive(starred);
-	});
 	const planned = ProjectButton("fa-solid", "fa-list-check", "Planned");
-	planned.addEventListener("click", () => {
-		if (planned.classList.contains("active")) {
-			return;
-		}
-
-		setActive(planned);
-	});
-	const tasks = ProjectButton("fa-solid", "fa-house", "Tasks");
-	tasks.addEventListener("click", () => {
-		if (tasks.classList.contains("active")) {
-			return;
-		}
-
-		setActive(tasks);
-	});
 
 	const hr = document.createElement("hr");
 
@@ -95,13 +56,12 @@ export default function () {
 	addProjectBtn.addEventListener("click", () => {
 		addProject("Untitled List");
 
-		renderUserProjects();
+		renderProjects();
 	});
   
 	defaultProjects.appendChild(myDay);
 	defaultProjects.appendChild(starred);
 	defaultProjects.appendChild(planned);
-	defaultProjects.appendChild(tasks);
   
 	projects.appendChild(defaultProjects);
 	projects.appendChild(hr);

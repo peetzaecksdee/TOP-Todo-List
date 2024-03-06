@@ -9,14 +9,14 @@ nav {
   flex-direction: column;
 }
 
-.addProject {
+#addProject {
   display: flex;
   align-items: center;
   gap: 18px;
   padding: 6px 10px;
 }
 
-.addProject::before {
+#addProject::before {
   content: "+";
   font-size: 1.5rem;
 }
@@ -31,13 +31,15 @@ nav {
   gap: 4px;
 }
 
-#project {
+/* Projects */
+
+.project {
   display: flex;
   justify-content: space-between;
   transition: 100ms ease-out;
 }
 
-#project:active {
+.project:active {
   transform: scale(.98);
 }
 
