@@ -1,8 +1,9 @@
 import "./Users.css";
 
-import { editProject, createTodo } from "../../Controllers/ProjectController";
+import { editProject, createTodo, removeProject } from "../../Controllers/ProjectController";
 import { textLengthValidator } from "../../Validator";
 import { TodoButton } from "../../utils";
+import { renderProjects, renderMainProjectPage } from "../../Controllers/RenderController";
 
 function createUserPage(project) {
 	const projectText = document
@@ -10,6 +11,10 @@ function createUserPage(project) {
 		.querySelector("span");
 
 	const main = document.querySelector("main");
+
+	const titleContainer = document.createElement("div");
+  titleContainer.classList.add('title-container');
+
 	const title = document.createElement("input");
 	title.type = "text";
 	title.value = project.getTitle();
@@ -21,6 +26,22 @@ function createUserPage(project) {
 			editProject(project);
 		}
 	});
+	const removeButton = document.createElement("button");
+  removeButton.id = "delete";
+  removeButton.textContent = "X";
+
+  let count = 0
+  removeButton.addEventListener("click", () => {
+    count++;
+    setTimeout(() => {
+      count--;
+    }, 1000);
+    if (count === 2) {
+      removeProject(project.id);
+      renderProjects();
+      renderMainProjectPage();
+    }
+  });
 
 	const todoList = document.createElement("div");
 	todoList.id = "todoList";
@@ -52,7 +73,10 @@ function createUserPage(project) {
 		}
 	});
 
-	main.appendChild(title);
+  titleContainer.appendChild(title);
+  titleContainer.appendChild(removeButton);
+
+	main.appendChild(titleContainer);
 	main.appendChild(todoList);
 	main.appendChild(addTodoBtn);
 }

@@ -33,7 +33,7 @@ export function addProject(name) {
   const LoadedProjects = loadProjects();
   const ProjectsLength = LoadedProjects.length;
 
-  let newProject = Project(ProjectsLength > 0 ? LoadedProjects[LoadedProjects.length - 1].id++ : 1, name);
+  let newProject = Project(ProjectsLength > 0 ? LoadedProjects[LoadedProjects.length - 1].id + 1 : 1, name);
 
   LoadedProjects.push(newProject);
 
@@ -67,7 +67,7 @@ export function createTodo(projectId, info) {
   
   let project = LoadedProjects.find((proj) => proj.id === projectId);
 
-	let newTodo = Todo(project.length > 0 ? project[project.length - 1].id++ : 1, projectId, ...info);
+	let newTodo = Todo(project.length > 0 ? project[project.length - 1].id + 1 : 1, projectId, ...info);
 
   project.addTodo(newTodo);
 

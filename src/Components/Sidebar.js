@@ -28,7 +28,7 @@
 
 import "./Sidebar.css";
 import { addProject } from "../Controllers/ProjectController";
-import { renderProjects } from "../Controllers/RenderController";
+import { renderProjects, renderMainProjectPage } from "../Controllers/RenderController";
 import { ProjectButton } from "../utils";
 
 export default function () {
@@ -44,6 +44,10 @@ export default function () {
 	myDay.classList.add("active");
 	const starred = ProjectButton("fa-regular", "fa-star", "Starred", -2);
 	const planned = ProjectButton("fa-solid", "fa-list-check", "Planned", -3);
+
+	myDay.addEventListener('click', () => renderMainProjectPage());
+	starred.addEventListener('click', () => renderMainProjectPage());
+	planned.addEventListener('click', () => renderMainProjectPage());
 
 	const hr = document.createElement("hr");
 

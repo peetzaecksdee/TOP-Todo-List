@@ -1,5 +1,8 @@
 main {
   height: 100%;
   width: var(--main-width);
+}
+
+.main {
   background: var(--main-gradient);
 }

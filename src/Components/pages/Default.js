@@ -1,7 +1,7 @@
 import './Default.css';
 
 function createDefaultPage() {
-  const main = document.createElement('main');
+  const main = document.querySelector('main');
 
   return main;
 }

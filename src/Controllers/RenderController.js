@@ -17,11 +17,22 @@ function setActive(button) {
 	});
 }
 
-function renderUserProjectPage(project) {
+export function renderUserProjectPage(project) {
 	const main = document.querySelector("main");
+	main.classList.add("user");
+	main.classList.remove("main");
 	main.textContent = "";
 
-  UserPage(project);
+	UserPage(project);
+}
+
+export function renderMainProjectPage() {
+	const main = document.querySelector("main");
+	main.classList.add("main");
+	main.classList.remove("user");
+	main.textContent = "";
+
+	DefaultPage();
 }
 
 export function renderProjects() {
@@ -30,7 +41,12 @@ export function renderProjects() {
 	userProjects.textContent = "";
 
 	Projects.forEach((project) => {
-		const btn = ProjectButton("fa-solid", "fa-bars", textLengthValidator(project.getTitle()), project.id);
+		const btn = ProjectButton(
+			"fa-solid",
+			"fa-bars",
+			textLengthValidator(project.getTitle()),
+			project.id
+		);
 		btn.addEventListener("click", () => {
 			renderUserProjectPage(project);
 		});
@@ -52,10 +68,11 @@ export function renderProjects() {
 export function init() {
 	const content = document.querySelector("#content");
 	content.appendChild(Sidebar());
-	content.appendChild(DefaultPage());
+	content.appendChild(document.createElement('main'));
 	content.appendChild(document.createElement("div"));
 	const body = document.querySelector("body");
 	body.appendChild(Footer());
 
+  renderMainProjectPage();
 	renderProjects();
 }
