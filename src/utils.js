@@ -1,6 +1,6 @@
 export function ProjectButton(opac, icon, text) {
   const Project = document.createElement('button');
-  Project.id = "project";
+  Project.classList.add("project");
 
   const div = document.createElement('div');
 
