@@ -11,6 +11,7 @@
 
 :root {
   --main-gradient: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgba(255,203,92,1) 100%);
+  --user-gradient: linear-gradient(45deg, rgba(34,193,195,1) 0%, rgb(92, 255, 141) 100%);
   --side-color: #202020;
   --footer-color: #101010;
   --content-height: 95vh;

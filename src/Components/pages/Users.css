@@ -1,0 +1,26 @@
+main {
+  height: 100%;
+  width: var(--main-width);
+  background: var(--user-gradient);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#todoList {
+  display: flex;
+  align-items: center;
+  overflow-y: scroll;
+  
+  width: 95%
+}
+
+#addTodo {
+  position: fixed;
+  bottom: 75px;
+  height: 3rem;
+  width: calc(var(--main-width) - 15%);
+  background-color: var(--side-color);
+}
