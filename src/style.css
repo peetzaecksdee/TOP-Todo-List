@@ -44,6 +44,7 @@ button {
   width: 100%;
   border-radius: 8px;
   position: relative;
+  font-family: 'Nunito';
 }
 
 .active {
@@ -73,17 +74,9 @@ body {
   color: white; 
 }
 
-/* Main Content */
-
 #content {
   height: var(--content-height);
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-main {
-  height: 100%;
-  width: var(--main-width);
-  background: var(--main-gradient);
 }

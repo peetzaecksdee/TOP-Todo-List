@@ -1,5 +1,6 @@
 import Footer from '../Components/Footer.js';
 import Sidebar from '../Components/Sidebar.js';
+import createDefaultPage from '../Components/pages/Default.js';
 
 import { loadProjects } from './ProjectController.js';
 import { ProjectButton } from '../utils';
@@ -39,7 +40,7 @@ export function renderProjects() {
 export function init() {
   const content = document.querySelector('#content');
   content.appendChild(Sidebar());
-  content.appendChild(document.createElement('main'));
+  content.appendChild(createDefaultPage());
   content.appendChild(document.createElement('div'));
   const body = document.querySelector('body');
   body.appendChild(Footer());
