@@ -15,7 +15,7 @@ export function loadProjects() {
 
 export function loadTodos(project, todos) {
   todos.forEach((todo) => {
-    project.addTodo(Todo(...todo));
+    project.addTodo(Todo(todo.id, todo.projectId, todo.title, todo.date, todo.dueDate, todo.starred, todo.done));
   });
 }
 
@@ -33,7 +33,7 @@ export function addProject(name) {
   const LoadedProjects = loadProjects();
   const ProjectsLength = LoadedProjects.length;
 
-  let newProject = Project(ProjectsLength > 0 ? LoadedProjects[LoadedProjects.length - 1].id++ : 0, name);
+  let newProject = Project(ProjectsLength > 0 ? LoadedProjects[LoadedProjects.length - 1].id++ : 1, name);
 
   LoadedProjects.push(newProject);
 
@@ -60,17 +60,20 @@ export function removeProject(projectId) {
 /**
  *
  * @param {*} projectId
- * @param  {[number, string, Date?, string?, boolean?, boolean?]} info [projectId, title, duedate, notes, starred, done]
+ * @param  {[string, Date?, string?, boolean?, boolean?]} info [title, duedate, notes, starred, done]
  */
 export function createTodo(projectId, info) {
   let LoadedProjects = loadProjects();
   
   let project = LoadedProjects.find((proj) => proj.id === projectId);
-	let newTodo = Todo(project[project.length - 1].id++, ...info);
+
+	let newTodo = Todo(project.length > 0 ? project[project.length - 1].id++ : 1, projectId, ...info);
 
   project.addTodo(newTodo);
 
   saveProjects(LoadedProjects);
+
+  return newTodo
 }
 
 export function removeTodo(projectId, todoId) {

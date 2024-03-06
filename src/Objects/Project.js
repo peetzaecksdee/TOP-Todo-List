@@ -27,13 +27,12 @@ export default function (uid, title) {
 		id,
 		title,
 		todos: todos.map((todo) => {
-			todo.toObject();
+			return todo.toObject();
 		}),
 	});
 
 	return Object.assign(
 		{},
-		id,
-		{ getTitle, getTodos, changeTitle, addTodo, removeTodo, toObject }
+		{ id, getTitle, getTodos, changeTitle, addTodo, removeTodo, toObject }
 	);
 }

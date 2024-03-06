@@ -1,10 +1,10 @@
 import "./Users.css";
 
-import { editProject } from "../../Controllers/ProjectController";
+import { editProject, createTodo } from "../../Controllers/ProjectController";
 import { textLengthValidator } from "../../Validator";
 
 function createUserPage(project) {
-  const projectText = document.querySelector(`[data-id=${project.id}]`).querySelector('span');
+  const projectText = document.querySelector(`[data-id="${project.id}"]`).querySelector('span');
 
 	const main = document.querySelector("main");
 	const title = document.createElement("input");
@@ -32,6 +32,11 @@ function createUserPage(project) {
   addTodoBtn.addEventListener('abort', () => {
     addTodoBtn.placeholder = addTodoBtn.value || "Add a task";
   })
+  addTodoBtn.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      const Todo = createTodo(project.id, [addTodoBtn.value, Date.now()]);
+    }
+  });
 
 	main.appendChild(title);
 	main.appendChild(todoList);

@@ -10,7 +10,7 @@
  */
 
 export default function (
-	id = 1,
+	uid = 1,
 	projectId,
 	title,
 	date,
@@ -20,7 +20,7 @@ export default function (
 ) {
 	const dueDate = Date.now();
 
-	const getId = () => id;
+	const id = uid;
 	const getTitle = () => title;
 	const getDate = () => date;
 	const getDueDate = () => dueDate;
@@ -46,13 +46,13 @@ export default function (
 	};
 
 	const toObject = () => ({
-		id, title, date, notes, starred, projectId, done,
+		id, title, date, dueDate, notes, starred, projectId, done,
 	});
 
 	return Object.assign(
 		{},
 		{
-			getId,
+			id,
 			getTitle,
 			getDate,
 			getDueDate,
