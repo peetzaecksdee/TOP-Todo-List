@@ -3,7 +3,7 @@ import "./Users.css";
 import { editProject, createTodo, removeProject } from "../../Controllers/ProjectController";
 import { textLengthValidator } from "../../Validator";
 import { TodoButton } from "../../utils";
-import { renderProjects, renderMainProjectPage } from "../../Controllers/RenderController";
+import { renderProjects, renderMainProjectPage, setActive } from "../../Controllers/RenderController";
 
 function createUserPage(project) {
 	const projectText = document
@@ -40,6 +40,7 @@ function createUserPage(project) {
       removeProject(project.id);
       renderProjects();
       renderMainProjectPage();
+      setActive(document.querySelector(".project"))
     }
   });
 

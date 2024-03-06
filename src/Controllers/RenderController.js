@@ -7,7 +7,7 @@ import { loadProjects } from "./ProjectController.js";
 import { ProjectButton } from "../utils";
 import { textLengthValidator } from "../Validator.js";
 
-function setActive(button) {
+export function setActive(button) {
 	const buttons = document.querySelectorAll(".project");
 	buttons.forEach((btn) => {
 		if (btn !== button) {
