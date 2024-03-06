@@ -3,14 +3,15 @@ import Todo from "../Objects/Todo.js";
 import { saveData, loadData } from "./StorageController.js";
 
 export function loadProjects() {
-  const projectsData = JSON.parse(loadData('projects')) || [];
+  let projectsData = JSON.parse(loadData('projects')) || [];
 
   return projectsData.map((data) => {
     const project = Project(data.id, data.title);
 
-    project.todos.forEach((todo) => {
+    data.todos.forEach((todo) => {
       project.addTodo(Todo(...todo));
     });
+    return project
   });
 }
 
