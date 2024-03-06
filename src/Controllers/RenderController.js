@@ -30,8 +30,7 @@ export function renderProjects() {
 	userProjects.textContent = "";
 
 	Projects.forEach((project) => {
-		const btn = ProjectButton("fa-solid", "fa-bars", textLengthValidator(project.getTitle()));
-    btn.dataset.id = project.id;
+		const btn = ProjectButton("fa-solid", "fa-bars", textLengthValidator(project.getTitle()), project.id);
 		btn.addEventListener("click", () => {
 			renderUserProjectPage(project);
 		});

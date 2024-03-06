@@ -40,10 +40,10 @@ export default function () {
 	const defaultProjects = document.createElement("div");
 	defaultProjects.id = "defaultProjects";
 
-	const myDay = ProjectButton("fa-regular", "fa-sun", "My Day");
+	const myDay = ProjectButton("fa-regular", "fa-sun", "My Day", -1);
 	myDay.classList.add("active");
-	const starred = ProjectButton("fa-regular", "fa-star", "Starred");
-	const planned = ProjectButton("fa-solid", "fa-list-check", "Planned");
+	const starred = ProjectButton("fa-regular", "fa-star", "Starred", -2);
+	const planned = ProjectButton("fa-solid", "fa-list-check", "Planned", -3);
 
 	const hr = document.createElement("hr");
 
