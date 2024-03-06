@@ -9,6 +9,11 @@ nav {
   flex-direction: column;
 }
 
+hr {
+  color: var(--hr-color);
+  margin: 4px 0;
+}
+
 #addProject {
   display: flex;
   align-items: center;

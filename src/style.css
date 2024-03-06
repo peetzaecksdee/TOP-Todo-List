@@ -21,18 +21,13 @@
   --main-width: calc(100vw - var(--nav-width) + var(--side-info-width));
   --button-hover: #353535;
   --block-before-color: #76b9ed;
-  --hr-color: #333333;
+  --hr-color: #414141;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-hr {
-  color: var(--hr-color);
-  margin: 4px 0;
 }
 
 button {

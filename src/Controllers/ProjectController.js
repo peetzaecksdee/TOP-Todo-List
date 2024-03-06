@@ -13,6 +13,12 @@ export function loadProjects() {
   });
 }
 
+export function loadTodos(project, todos) {
+  todos.forEach((todo) => {
+    project.addTodo(Todo(...todo));
+  });
+}
+
 /**
  * 
  * @param {[Project]} projects 
@@ -36,10 +42,19 @@ export function addProject(name) {
   return newProject
 }
 
+export function editProject(newProject) {
+  let LoadedProjects = loadProjects();
+  
+  let idx = LoadedProjects.findIndex((project) => project.id === newProject.id)
+  LoadedProjects[idx] = newProject;
+
+  saveProjects(LoadedProjects);
+}
+
 export function removeProject(projectId) {
   let LoadedProjects = loadProjects();
 
-  saveProjects(LoadedProjects.filter((project) => project.getId !== projectId));
+  saveProjects(LoadedProjects.filter((project) => project.id !== projectId));
 }
 
 /**
@@ -50,7 +65,7 @@ export function removeProject(projectId) {
 export function createTodo(projectId, info) {
   let LoadedProjects = loadProjects();
   
-  let project = LoadedProjects.find((proj) => proj.getId() === projectId);
+  let project = LoadedProjects.find((proj) => proj.id === projectId);
 	let newTodo = Todo(project[project.length - 1].id++, ...info);
 
   project.addTodo(newTodo);
@@ -61,7 +76,7 @@ export function createTodo(projectId, info) {
 export function removeTodo(projectId, todoId) {
   let LoadedProjects = loadProjects();
   
-  let project = LoadedProjects.find((proj) => proj.getId() === projectId);
+  let project = LoadedProjects.find((proj) => proj.id === projectId);
 
   project.removeTodo(todoId);
 
@@ -71,7 +86,7 @@ export function removeTodo(projectId, todoId) {
 export function editTodo(projectId, todoId, info) {
   let LoadedProjects = loadProjects();
   
-  let project = LoadedProjects.find((proj) => proj.getId() === projectId);
+  let project = LoadedProjects.find((proj) => proj.id === projectId);
 	let newTodo = Todo(todoId, ...info);
 
   let todos = project.getTodos();

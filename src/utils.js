@@ -11,7 +11,7 @@ export function ProjectButton(opac, icon, text) {
   textSpan.textContent = text
   
   const count = document.createElement('span');
-  count.dataset.count = '';
+  count.dataset.count = 0;
   
   div.appendChild(i);
   div.appendChild(textSpan);

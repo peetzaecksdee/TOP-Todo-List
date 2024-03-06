@@ -1,26 +1,57 @@
 main {
-  height: 100%;
-  width: var(--main-width);
-  background: var(--user-gradient);
-  
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+	height: 100%;
+	width: var(--main-width);
+	background: var(--user-gradient);
+	padding: 32px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+input {
+	background: none;
+	outline: none;
+	caret-color: white;
+	color: white;
+	border: none;
+	font-family: "Nunito";
+  text-overflow: ellipsis;
+}
+
+#titleInput {
+  font-size: 2.5rem;
+  cursor: default;
+  width: 95%;
+  padding: 0 2px;
+}
+
+#titleInput:hover {
+  background-color: var(--button-hover);
 }
 
 #todoList {
-  display: flex;
-  align-items: center;
-  overflow-y: scroll;
-  
-  width: 95%
+	display: flex;
+	align-items: center;
+	overflow-y: scroll;
+
+	width: 100%;
 }
 
 #addTodo {
-  position: fixed;
-  bottom: 75px;
-  height: 3rem;
-  width: calc(var(--main-width) - 15%);
-  background-color: var(--side-color);
+	background-color: var(--side-color);
+	height: 3rem;
+	width: 100%;
+	border-radius: 8px;
+	padding-left: 24px;
+	display: flex;
+	align-items: center;
+}
+
+#addTodo:hover {
+	background-color: var(--button-hover);
+}
+
+#addTodo:focus {
+	background-color: var(--button-hover);
 }

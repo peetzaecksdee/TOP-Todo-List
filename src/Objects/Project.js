@@ -4,10 +4,10 @@
  * @param {string} title
  */
 
-export default function (id, title) {
+export default function (uid, title) {
 	let todos = [];
 
-	const getId = () => id;
+	const id = uid;
 	const getTitle = () => title;
 	const getTodos = () => todos;
 
@@ -33,6 +33,7 @@ export default function (id, title) {
 
 	return Object.assign(
 		{},
-		{ getId, getTitle, getTodos, changeTitle, addTodo, removeTodo, toObject }
+		id,
+		{ getTitle, getTodos, changeTitle, addTodo, removeTodo, toObject }
 	);
 }
