@@ -60,6 +60,11 @@ input {
 	align-items: center;
 	background-color: var(--side-color);
 	padding: 18px 20px;
+  transition: 75ms ease-out;
+}
+
+.todo:active {
+  transform: scale(.99);
 }
 
 /* The abomination of styling */
