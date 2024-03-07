@@ -18,7 +18,7 @@ export function loadTodos(project, todos) {
 		project.addTodo(
 			Todo(
 				todo.id,
-				todo.projectId,
+				todo.pid,
 				todo.title,
 				todo.date,
 				todo.dueDate,
@@ -103,14 +103,13 @@ export function removeTodo(projectId, todoId) {
 	saveProjects(LoadedProjects);
 }
 
-export function editTodo(projectId, todoId, info) {
+export function editTodo(newTodo) {
 	let LoadedProjects = loadProjects();
 
-	let project = LoadedProjects.find((proj) => proj.id === projectId);
-	let newTodo = Todo(todoId, ...info);
+	let project = LoadedProjects.find((proj) => proj.id === newTodo.pid);
 
 	let todos = project.getTodos();
-	let idx = todos.findIndex((todo) => todo.id === todoId);
+	let idx = todos.findIndex((todo) => todo.id === newTodo.id);
 	todos[idx] = newTodo;
 
 	saveProjects(LoadedProjects);

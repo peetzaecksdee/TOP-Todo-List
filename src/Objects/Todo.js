@@ -21,12 +21,12 @@ export default function (
 	const dueDate = Date.now();
 
 	const id = uid;
+	const pid = projectId;
 	const getTitle = () => title;
 	const getDate = () => date;
 	const getDueDate = () => dueDate;
 	const getNotes = () => notes;
 	const isStarred = () => starred;
-	const getProjectId = () => projectId;
 	const isDone = () => done;
 
 	const setTitle = (newTitle) => {
@@ -46,19 +46,19 @@ export default function (
 	};
 
 	const toObject = () => ({
-		id, title, date, dueDate, notes, starred, projectId, done,
+		id, pid, title, date, dueDate, notes, starred, done,
 	});
 
 	return Object.assign(
 		{},
 		{
 			id,
+			pid,
 			getTitle,
 			getDate,
 			getDueDate,
 			getNotes,
 			isStarred,
-			getProjectId,
 			isDone,
 			setTitle,
 			setDueDate,

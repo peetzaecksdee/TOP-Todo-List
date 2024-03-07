@@ -2,7 +2,7 @@ main {
 	height: 100%;
 	width: var(--main-width);
 	padding: 32px;
-	
+
 	display: flex;
 	gap: 12px;
 	flex-direction: column;
@@ -33,15 +33,16 @@ input {
 	cursor: default;
 	width: 100%;
 	padding: 0 2px;
+	color: var(--page-color);
 }
 
+#titleInput:focus,
 #titleInput:hover,
 #delete:hover {
 	background-color: #4141411c;
 }
 
 #titleInput:focus {
-	background-color: #4141411c;
 	border-bottom: 2px solid var(--block-before-color);
 }
 
@@ -66,8 +67,14 @@ input {
 .todo {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	background-color: var(--side-color);
 	padding: 18px 20px;
+}
+
+.todo:has(.done) span {
+	text-decoration: line-through;
+	filter: brightness(50%);
 }
 
 .fa-circle,
@@ -75,11 +82,8 @@ input {
 	font-size: 1.2rem;
 }
 
-.fa-circle:hover {
-	padding-right: 1.5px;
-}
-
-.fa-circle:hover::after {
+.done.fa-circle::after,
+.fa-circle:not(.done):hover::after {
 	content: "\f00c";
 	font-family: FontAwesome;
 	position: relative;
@@ -89,8 +93,38 @@ input {
 	border-radius: 50%;
 }
 
+.done.fa-circle::after {
+	color: var(--side-color);
+}
+
+.done.fa-circle:focus::after {
+	content: "";
+	padding-right: 10.5px;
+}
+
+:not(.done).fa-circle.fa-solid:hover::after {
+	color: var(--side-color);
+}
+
+.fa-star:not(.fa-regular):focus,
+.fa-star:not(.fa-solid):focus {
+	color: white;
+}
+
+.done.fa-circle,
+.fa-star:not(.fa-solid):hover,
+.fa-star:not(.fa-regular) {
+	color: var(--page-color);
+}
+
+:not(.done).fa-circle:hover,
+.done.fa-circle {
+	padding-right: 1.5px;
+}
+
 #addTodo {
 	background-color: var(--side-color);
+	color: var(--page-color);
 	height: 3rem;
 	width: 100%;
 	padding: 22px 20px;
@@ -98,10 +132,7 @@ input {
 	align-items: center;
 }
 
-#addTodo:hover {
-	background-color: var(--button-hover);
-}
-
+#addTodo:hover,
 #addTodo:focus {
 	background-color: var(--button-hover);
 }

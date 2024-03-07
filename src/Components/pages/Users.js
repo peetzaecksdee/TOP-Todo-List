@@ -1,27 +1,96 @@
 import "./Users.css";
 
-import { editProject, createTodo, removeProject } from "../../Controllers/ProjectController";
+import {
+	editProject,
+	createTodo,
+	removeProject,
+	editTodo,
+} from "../../Controllers/ProjectController";
 import { textLengthValidator } from "../../Validator";
-import { renderProjects, renderMainProjectPage, setActive } from "../../Controllers/RenderController";
+import {
+	renderProjects,
+	renderMainProjectPage,
+	setActive,
+} from "../../Controllers/RenderController";
 
-function TodoButton(title, done, starred, id) {
+function TodoButton(todo) {
 	const Todo = document.createElement("button");
+	let starred = todo.isStarred();
+	let done = todo.isDone()
 	Todo.classList.add("todo");
-	Todo.dataset.Tid = id;
+	Todo.dataset.Tid = todo.id;
 	Todo.dataset.done = done;
 	Todo.dataset.starred = starred;
-
+	
 	const div = document.createElement("div");
-
+	
 	const circle = document.createElement("i");
-  circle.classList.add("fa-regular", "fa-circle");
+	if (done) {
+		circle.classList.add("done");
+	}
+	circle.classList.add(done ? "fa-solid" : "fa-regular", "fa-circle");
+	circle.addEventListener("mousedown", () => {
+		if (done) {
+			circle.classList.remove("fa-solid");
+			circle.classList.add("fa-regular");
+			return;
+		}
+		
+		circle.classList.remove("fa-regular");
+		circle.classList.add("fa-solid");
+	});
+	circle.addEventListener("mouseout", () => {
+		if (done) { 
+			circle.classList.add("fa-solid");
+			circle.classList.remove("fa-regular");
+			return; 
+		}
+
+		circle.classList.add("fa-regular");
+		circle.classList.remove("fa-solid");
+	});
+	circle.addEventListener("click", () => {
+		done = !done;
+		if (done) {
+			circle.classList.add("done");
+		} else {
+			circle.classList.remove("done");
+		}
+		Todo.dataset.done = done;
+		todo.setDone(done);
+		editTodo(todo);
+	});
 
 	const textSpan = document.createElement("span");
-	textSpan.textContent = title;
-
+	textSpan.textContent = todo.getTitle();
+	
 	const star = document.createElement("i");
-	star.classList.add("fa-regular", "fa-star");
-
+	star.classList.add(starred ? "fa-solid" : "fa-regular", "fa-star");
+	star.addEventListener("click", () => {
+		if (starred) {
+			star.classList.remove("fa-solid");
+			star.classList.add("fa-regular");
+			starred = false;
+		} else {
+			star.animate(
+				[
+					{ fontSize: ".75rem" }, 
+					{ fontSize: "1.25rem" }
+				], 
+				{
+					duration: 125,
+					iterations: 1,
+				},
+			);
+			star.classList.remove("fa-regular");
+			star.classList.add("fa-solid");
+			starred = true;
+		}
+		Todo.dataset.starred = starred;
+		todo.setStarred(starred);
+		editTodo(todo);
+	});
+	
 	div.appendChild(circle);
 	div.appendChild(textSpan);
 
@@ -39,7 +108,7 @@ function createUserPage(project) {
 	const main = document.querySelector("main");
 
 	const titleContainer = document.createElement("div");
-  titleContainer.classList.add('title-container');
+	titleContainer.classList.add("title-container");
 
 	const title = document.createElement("input");
 	title.type = "text";
@@ -58,32 +127,27 @@ function createUserPage(project) {
 		editProject(project);
 	});
 	const removeButton = document.createElement("button");
-  removeButton.id = "delete";
-  removeButton.textContent = "X";
-	
-  let count = 0
-  removeButton.addEventListener("click", () => {
+	removeButton.id = "delete";
+	removeButton.textContent = "X";
+
+	let count = 0;
+	removeButton.addEventListener("click", () => {
 		count++;
-    setTimeout(() => {
+		setTimeout(() => {
 			count--;
-    }, 1000);
-    if (count === 2) {
-      removeProject(project.id);
-      renderProjects();
-      renderMainProjectPage();
-      setActive(document.querySelector(".project"))
-    }
-  });
+		}, 750);
+		if (count === 2) {
+			removeProject(project.id);
+			renderProjects();
+			renderMainProjectPage();
+			setActive(document.querySelector(".project"));
+		}
+	});
 
 	const todoList = document.createElement("div");
 	todoList.id = "todoList";
 	project.getTodos().forEach((todo) => {
-		const TodoBtn = TodoButton(
-			todo.getTitle(),
-			todo.isDone(),
-			todo.isStarred(),
-			todo.id
-		);
+		const TodoBtn = TodoButton(todo);
 		todoList.appendChild(TodoBtn);
 	});
 
@@ -99,15 +163,14 @@ function createUserPage(project) {
 	});
 	addTodoBtn.addEventListener("keypress", (event) => {
 		if (event.key === "Enter") {
-			createTodo(project.id, [addTodoBtn.value, Date.now()]);
-			todoList.appendChild(TodoButton(addTodoBtn.value, false, false));
+			todoList.appendChild(TodoButton(createTodo(project.id, [addTodoBtn.value, Date.now()])));
 			addTodoBtn.value = "";
 		}
 	});
 
-  titleContainer.appendChild(title);
-  titleContainer.appendChild(removeButton);
-	
+	titleContainer.appendChild(title);
+	titleContainer.appendChild(removeButton);
+
 	main.appendChild(titleContainer);
 	main.appendChild(todoList);
 	main.appendChild(addTodoBtn);
