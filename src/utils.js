@@ -3,6 +3,10 @@ export function ProjectButton(opac, icon, text, id) {
 	Project.classList.add("project");
 	Project.dataset.id = id;
 
+	Project.addEventListener("mousedown", () => ButtonAnimation(Project, 0.98));
+	Project.addEventListener("click", () => ButtonAnimation(Project, 1));
+	Project.addEventListener("mouseout", () => ButtonAnimation(Project, 1));
+
 	const div = document.createElement("div");
 
 	const i = document.createElement("i");
@@ -21,4 +25,12 @@ export function ProjectButton(opac, icon, text, id) {
 	Project.appendChild(count);
 
 	return Project;
+}
+
+export function ButtonAnimation(btn, scale, condition) {
+	if (condition && !condition()) {
+		return;
+	}
+
+	btn.style = `transform: scale(${scale})`;
 }

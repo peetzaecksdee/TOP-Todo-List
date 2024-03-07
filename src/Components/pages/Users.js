@@ -12,18 +12,46 @@ import {
 	renderMainProjectPage,
 	setActive,
 } from "../../Controllers/RenderController";
+import { ButtonAnimation } from "../../utils";
 
 function TodoButton(todo) {
 	const Todo = document.createElement("button");
 	let starred = todo.isStarred();
-	let done = todo.isDone()
+	let done = todo.isDone();
 	Todo.classList.add("todo");
 	Todo.dataset.Tid = todo.id;
 	Todo.dataset.done = done;
 	Todo.dataset.starred = starred;
-	
+
+	const starAnimation =
+		([{ fontSize: ".75rem" }, { fontSize: "1.25rem" }],
+		{
+			duration: 125,
+			iterations: 1,
+		});
+
+	function toggleStarred() {
+		if (starred) {
+			star.classList.remove("fa-solid");
+			star.classList.add("fa-regular");
+			starred = false;
+		} else {
+			star.animate(starAnimation);
+			star.classList.remove("fa-regular");
+			star.classList.add("fa-solid");
+			starred = true;
+		}
+		Todo.dataset.starred = starred;
+		todo.setStarred(starred);
+		editTodo(todo);
+	}
+
+	function isBtnElem(elem) {
+		return (elem.target === textSpan && elem.target === Todo) ? true : false;
+	}
+
 	const div = document.createElement("div");
-	
+
 	const circle = document.createElement("i");
 	if (done) {
 		circle.classList.add("done");
@@ -35,15 +63,15 @@ function TodoButton(todo) {
 			circle.classList.add("fa-regular");
 			return;
 		}
-		
+
 		circle.classList.remove("fa-regular");
 		circle.classList.add("fa-solid");
 	});
 	circle.addEventListener("mouseout", () => {
-		if (done) { 
+		if (done) {
 			circle.classList.add("fa-solid");
 			circle.classList.remove("fa-regular");
-			return; 
+			return;
 		}
 
 		circle.classList.add("fa-regular");
@@ -63,58 +91,15 @@ function TodoButton(todo) {
 
 	const textSpan = document.createElement("span");
 	textSpan.textContent = todo.getTitle();
-	
+
 	const star = document.createElement("i");
 	star.classList.add(starred ? "fa-solid" : "fa-regular", "fa-star");
-	star.addEventListener("click", () => {
-		if (starred) {
-			star.classList.remove("fa-solid");
-			star.classList.add("fa-regular");
-			starred = false;
-		} else {
-			star.animate(
-				[
-					{ fontSize: ".75rem" }, 
-					{ fontSize: "1.25rem" }
-				], 
-				{
-					duration: 125,
-					iterations: 1,
-				},
-			);
-			star.classList.remove("fa-regular");
-			star.classList.add("fa-solid");
-			starred = true;
-		}
-		Todo.dataset.starred = starred;
-		todo.setStarred(starred);
-		editTodo(todo);
-	});
+	star.addEventListener("click", () => toggleStarred());
 
-	Todo.addEventListener('mousedown', (elem) => {
-		if (elem.target !== textSpan && elem.target !== Todo) {
-			return;
-		}
+	Todo.addEventListener("mousedown", (elem) => ButtonAnimation(Todo, 0.99, isBtnElem(elem)));
+	Todo.addEventListener("mouseout", (elem) => ButtonAnimation(Todo, 1, isBtnElem(elem)));
+	Todo.addEventListener("click", (elem) => ButtonAnimation(Todo, 1, isBtnElem(elem)));
 
-		Todo.style = "transform: scale(.99)";
-	})
-
-	Todo.addEventListener('mouseout', (elem) => {
-		if (elem.target !== textSpan && elem.target !== Todo) {
-			return;
-		}
-
-		Todo.style = "";
-	})
-
-	Todo.addEventListener('click', (elem) => {
-		if (elem.target !== textSpan && elem.target !== Todo) {
-			return;
-		}
-
-		Todo.style = "";
-	})
-	
 	div.appendChild(circle);
 	div.appendChild(textSpan);
 
@@ -191,7 +176,9 @@ function createUserPage(project) {
 			if (!addTodoBtn.value) {
 				return;
 			}
-			todoList.appendChild(TodoButton(createTodo(project.id, [addTodoBtn.value, Date.now()])));
+			todoList.appendChild(
+				TodoButton(createTodo(project.id, [addTodoBtn.value, Date.now()]))
+			);
 			addTodoBtn.value = "";
 		}
 	});

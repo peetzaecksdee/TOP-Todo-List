@@ -44,10 +44,6 @@ hr {
   transition: 100ms ease-out;
 }
 
-.project:active {
-  transform: scale(.98);
-}
-
 /* Icon Styling */
 
 .fa-regular, .fa-solid {
