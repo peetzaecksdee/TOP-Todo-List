@@ -79,9 +79,11 @@ export function createTodo(projectId, info) {
 	let LoadedProjects = loadProjects();
 
 	let project = LoadedProjects.find((proj) => proj.id === projectId);
+	let projectTodos = project.getTodos();
+	let projectLength = projectTodos.length;
 
 	let newTodo = Todo(
-		project.length > 0 ? project[project.length - 1].id + 1 : 1,
+		projectLength > 0 ? projectTodos[projectLength - 1].id + 1 : 1,
 		projectId,
 		...info
 	);

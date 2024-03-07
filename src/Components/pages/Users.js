@@ -90,6 +90,30 @@ function TodoButton(todo) {
 		todo.setStarred(starred);
 		editTodo(todo);
 	});
+
+	Todo.addEventListener('mousedown', (elem) => {
+		if (elem.target !== textSpan && elem.target !== Todo) {
+			return;
+		}
+
+		Todo.style = "transform: scale(.99)";
+	})
+
+	Todo.addEventListener('mouseout', (elem) => {
+		if (elem.target !== textSpan && elem.target !== Todo) {
+			return;
+		}
+
+		Todo.style = "";
+	})
+
+	Todo.addEventListener('click', (elem) => {
+		if (elem.target !== textSpan && elem.target !== Todo) {
+			return;
+		}
+
+		Todo.style = "";
+	})
 	
 	div.appendChild(circle);
 	div.appendChild(textSpan);
@@ -164,6 +188,9 @@ function createUserPage(project) {
 	});
 	addTodoBtn.addEventListener("keypress", (event) => {
 		if (event.key === "Enter") {
+			if (!addTodoBtn.value) {
+				return;
+			}
 			todoList.appendChild(TodoButton(createTodo(project.id, [addTodoBtn.value, Date.now()])));
 			addTodoBtn.value = "";
 		}

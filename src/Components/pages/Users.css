@@ -63,10 +63,6 @@ input {
   transition: 75ms ease-out;
 }
 
-.todo:active {
-  transform: scale(.99);
-}
-
 /* The abomination of styling */
 
 #titleInput:focus,
