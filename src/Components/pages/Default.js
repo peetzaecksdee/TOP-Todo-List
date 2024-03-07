@@ -1,9 +1,9 @@
-import './Default.css';
+import "./Default.css";
 
 function createDefaultPage() {
-  const main = document.querySelector('main');
+	const main = document.querySelector("main");
 
-  return main;
+	return main;
 }
 
 export default createDefaultPage;

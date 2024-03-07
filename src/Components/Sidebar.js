@@ -28,7 +28,12 @@
 
 import "./Sidebar.css";
 import { addProject } from "../Controllers/ProjectController";
-import { renderProjects, renderMainProjectPage } from "../Controllers/RenderController";
+import {
+	renderProjects,
+	renderMainProjectPage,
+	renderUserProjectPage,
+	setActive,
+} from "../Controllers/RenderController";
 import { ProjectButton } from "../utils";
 
 export default function () {
@@ -45,9 +50,9 @@ export default function () {
 	const starred = ProjectButton("fa-regular", "fa-star", "Starred", -2);
 	const planned = ProjectButton("fa-solid", "fa-list-check", "Planned", -3);
 
-	myDay.addEventListener('click', () => renderMainProjectPage());
-	starred.addEventListener('click', () => renderMainProjectPage());
-	planned.addEventListener('click', () => renderMainProjectPage());
+	myDay.addEventListener("click", () => renderMainProjectPage());
+	starred.addEventListener("click", () => renderMainProjectPage());
+	planned.addEventListener("click", () => renderMainProjectPage());
 
 	const hr = document.createElement("hr");
 
@@ -58,21 +63,23 @@ export default function () {
 	addProjectBtn.id = "addProject";
 	addProjectBtn.textContent = "New List";
 	addProjectBtn.addEventListener("click", () => {
-		addProject("Untitled List");
-
+		const newProject = addProject("Untitled List");
 		renderProjects();
+		
+		renderUserProjectPage(newProject);
+		setActive(document.querySelector(`[data-id="${newProject.id}"]`))
 	});
-  
+
 	defaultProjects.appendChild(myDay);
 	defaultProjects.appendChild(starred);
 	defaultProjects.appendChild(planned);
-  
+
 	projects.appendChild(defaultProjects);
 	projects.appendChild(hr);
 	projects.appendChild(userProjects);
-  
+
 	nav.appendChild(projects);
 	nav.appendChild(addProjectBtn);
-  
+
 	return nav;
 }
