@@ -46,10 +46,6 @@ function TodoButton(todo) {
 		editTodo(todo);
 	}
 
-	function isBtnElem(elem) {
-		return (elem.target === textSpan && elem.target === Todo) ? true : false;
-	}
-
 	const div = document.createElement("div");
 
 	const circle = document.createElement("i");
@@ -96,9 +92,13 @@ function TodoButton(todo) {
 	star.classList.add(starred ? "fa-solid" : "fa-regular", "fa-star");
 	star.addEventListener("click", () => toggleStarred());
 
+	function isBtnElem(elem) {
+		return (elem.target === textSpan || elem.target === Todo) ? true : false;
+	}
+
 	Todo.addEventListener("mousedown", (elem) => ButtonAnimation(Todo, 0.99, isBtnElem(elem)));
-	Todo.addEventListener("mouseout", (elem) => ButtonAnimation(Todo, 1, isBtnElem(elem)));
-	Todo.addEventListener("click", (elem) => ButtonAnimation(Todo, 1, isBtnElem(elem)));
+	Todo.addEventListener("mouseout", () => ButtonAnimation(Todo, 1));
+	Todo.addEventListener("click", () => ButtonAnimation(Todo, 1));
 
 	div.appendChild(circle);
 	div.appendChild(textSpan);

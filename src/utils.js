@@ -28,9 +28,14 @@ export function ProjectButton(opac, icon, text, id) {
 }
 
 export function ButtonAnimation(btn, scale, condition) {
-	if (condition && !condition()) {
+	console.log(condition);
+	if (condition === false) {
 		return;
 	}
 
-	btn.style = `transform: scale(${scale})`;
+	if (scale === 1) {
+		btn.style = "";
+	} else {
+		btn.style = `transform: scale(${scale})`;
+	}
 }

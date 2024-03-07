@@ -41,7 +41,7 @@ hr {
 .project {
   display: flex;
   justify-content: space-between;
-  transition: 100ms ease-out;
+  transition: 75ms ease-out;
 }
 
 /* Icon Styling */
