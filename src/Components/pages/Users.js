@@ -2,8 +2,34 @@ import "./Users.css";
 
 import { editProject, createTodo, removeProject } from "../../Controllers/ProjectController";
 import { textLengthValidator } from "../../Validator";
-import { TodoButton } from "../../utils";
 import { renderProjects, renderMainProjectPage, setActive } from "../../Controllers/RenderController";
+
+function TodoButton(title, done, starred, id) {
+	const Todo = document.createElement("button");
+	Todo.classList.add("todo");
+	Todo.dataset.Tid = id;
+	Todo.dataset.done = done;
+	Todo.dataset.starred = starred;
+
+	const div = document.createElement("div");
+
+	const circle = document.createElement("i");
+  circle.classList.add("fa-regular", "fa-circle");
+
+	const textSpan = document.createElement("span");
+	textSpan.textContent = title;
+
+	const star = document.createElement("i");
+	star.classList.add("fa-regular", "fa-star");
+
+	div.appendChild(circle);
+	div.appendChild(textSpan);
+
+	Todo.appendChild(div);
+	Todo.appendChild(star);
+
+	return Todo;
+}
 
 function createUserPage(project) {
 	const projectText = document
