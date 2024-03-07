@@ -116,6 +116,7 @@ function createUserPage(project) {
 	title.id = "titleInput";
 	title.addEventListener("keypress", (event) => {
 		if (event.key === "Enter") {
+			title.blur();
 			project.changeTitle(title.value);
 			projectText.textContent = textLengthValidator(title.value);
 			editProject(project);
