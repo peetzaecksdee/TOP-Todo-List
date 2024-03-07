@@ -26,15 +26,20 @@ function createUserPage(project) {
 			editProject(project);
 		}
 	});
+	title.addEventListener("blur", () => {
+		project.changeTitle(title.value);
+		projectText.textContent = textLengthValidator(title.value);
+		editProject(project);
+	});
 	const removeButton = document.createElement("button");
   removeButton.id = "delete";
   removeButton.textContent = "X";
-
+	
   let count = 0
   removeButton.addEventListener("click", () => {
-    count++;
+		count++;
     setTimeout(() => {
-      count--;
+			count--;
     }, 1000);
     if (count === 2) {
       removeProject(project.id);
@@ -76,7 +81,7 @@ function createUserPage(project) {
 
   titleContainer.appendChild(title);
   titleContainer.appendChild(removeButton);
-
+	
 	main.appendChild(titleContainer);
 	main.appendChild(todoList);
 	main.appendChild(addTodoBtn);

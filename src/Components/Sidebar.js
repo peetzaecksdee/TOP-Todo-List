@@ -65,9 +65,16 @@ export default function () {
 	addProjectBtn.addEventListener("click", () => {
 		const newProject = addProject("Untitled List");
 		renderProjects();
-		
+
+		const newProjectbtn = document.querySelector(
+			`[data-id="${newProject.id}"]`
+		);
 		renderUserProjectPage(newProject);
-		setActive(document.querySelector(`[data-id="${newProject.id}"]`))
+		setActive(newProjectbtn);
+
+		const titleInput = document.querySelector('#titleInput');
+		titleInput.focus();
+		titleInput.select();
 	});
 
 	defaultProjects.appendChild(myDay);
