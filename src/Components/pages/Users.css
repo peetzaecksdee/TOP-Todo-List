@@ -73,6 +73,7 @@ input {
 }
 
 .todo:has(.done) span {
+	font-style: italic;
 	text-decoration: line-through;
 	filter: brightness(50%);
 }
