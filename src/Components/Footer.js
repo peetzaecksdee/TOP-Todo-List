@@ -22,7 +22,7 @@ function loadFooter() {
   githubPage.target = "_blank";
 
 	const githubImage = new Image();
-	githubImage.src = import("../assets/images/pizza.jpg");
+	githubImage.src = require("../assets/images/pizza.jpg");
 	githubImage.alt = "my profile";
 
 	githubPage.appendChild(githubImage);

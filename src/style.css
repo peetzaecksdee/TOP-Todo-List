@@ -17,8 +17,8 @@
   --content-height: 95vh;
   --footer-height: 5vh;
   --nav-width: 17rem;
-  --side-info-width: 12vw;
-  --main-width: calc(100vw - var(--nav-width) + var(--side-info-width));
+  --editor-width: 20rem;
+  --main-width: calc(100vw - var(--nav-width) + var(--editor-width));
   --button-hover: #353535;
   --block-before-color: #76b9ed;
   --hr-color: #414141;
@@ -44,7 +44,7 @@ button {
   font-family: 'Nunito';
 }
 
-.active {
+button.active {
   background-color: var(--button-hover);
 }
 
@@ -69,6 +69,8 @@ body {
   height: 100vh;
   font-family: 'Nunito';
   color: white; 
+  overflow: hidden;
+  background-color: var(--side-color);
 }
 
 #content {

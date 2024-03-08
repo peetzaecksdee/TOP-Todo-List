@@ -18,9 +18,7 @@ export default function (uid, title) {
 		todos.push(todo);
 	};
 	const removeTodo = (todoId) => {
-		todos.filter((todo) => {
-			todo.getId !== todoId;
-		});
+		todos = todos.filter((todo) => todo.id !== todoId);
 	};
 
 	const toObject = () => ({

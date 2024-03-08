@@ -1,0 +1,51 @@
+.editor {
+  height: 100%;
+  background-color: var(--side-color);
+  flex-shrink: 0;
+  overflow: hidden;
+  padding: 4px 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.editor.active {
+  width: var(--editor-width);
+  animation: slide-in 500ms cubic-bezier(0,.93,.74,1);
+}
+
+.extra-info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.extra-info span {
+  text-align: center;
+  flex-grow: 1;
+}
+
+.extra-info span,
+.extra-info #delete {
+  font-size: .85rem;
+}
+
+.extra-info #delete:hover {
+  background-color: var(--button-hover);
+}
+
+.extra-info #delete:hover {
+  background-color: var(--button-hover);
+}
+
+@keyframes slide-in {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: var(--editor-width);
+  }
+}

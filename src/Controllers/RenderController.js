@@ -2,9 +2,10 @@ import Footer from "../Components/Footer.js";
 import Sidebar from "../Components/Sidebar.js";
 import DefaultPage from "../Components/pages/Default.js";
 import UserPage from "../Components/pages/Users.js";
+import Editor from "../Components/Editor.js";
 
-import { loadProjects } from "./ProjectController.js";
-import { ProjectButton } from "../utils";
+import { getTodos, loadProjects } from "./ProjectController.js";
+import { ProjectButton, TodoButton } from "../utils";
 import { textLengthValidator } from "../Validator.js";
 
 export function setActive(button) {
@@ -15,6 +16,29 @@ export function setActive(button) {
 		}
 		button.classList.add("active");
 	});
+}
+
+export function renderTodos(projectId) {
+	const TodoList = document.querySelector("#todoList");
+	TodoList.textContent = "";
+
+	const todos = getTodos(projectId);
+	todos.forEach((todo) => {
+		TodoList.appendChild(TodoButton(todo));
+	})
+}
+
+export function renderEditor(Todo) {
+	Editor(Todo);
+	const EditorTab = document.querySelector(".editor");	
+	if (Todo.id != EditorTab.dataset.selId || EditorTab.dataset.selId === undefined) {
+		EditorTab.dataset.selId = Todo.id;
+		EditorTab.classList.add("active");
+	} else {
+		EditorTab.textContent = "";
+		EditorTab.classList.remove("active");
+		EditorTab.dataset.selId = "";
+	}	
 }
 
 export function renderUserProjectPage(project) {
@@ -66,13 +90,16 @@ export function renderProjects() {
 }
 
 export function init() {
+	const editor = document.createElement("div");
+	editor.classList.add("editor")
+
 	const content = document.querySelector("#content");
 	content.appendChild(Sidebar());
-	content.appendChild(document.createElement('main'));
-	content.appendChild(document.createElement("div"));
+	content.appendChild(document.createElement("main"));
+	content.appendChild(editor);
 	const body = document.querySelector("body");
 	body.appendChild(Footer());
 
-  renderMainProjectPage();
+	renderMainProjectPage();
 	renderProjects();
 }

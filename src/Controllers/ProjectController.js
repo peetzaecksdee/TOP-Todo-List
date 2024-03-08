@@ -95,24 +95,32 @@ export function createTodo(projectId, info) {
 	return newTodo;
 }
 
-export function removeTodo(projectId, todoId) {
+export function removeTodo(todo) {
 	let LoadedProjects = loadProjects();
 
-	let project = LoadedProjects.find((proj) => proj.id === projectId);
-
-	project.removeTodo(todoId);
-
+	let project = LoadedProjects.find((proj) => proj.id === todo.pid);
+	
+	project.removeTodo(todo.id);
+	
 	saveProjects(LoadedProjects);
 }
 
 export function editTodo(newTodo) {
 	let LoadedProjects = loadProjects();
-
+	
 	let project = LoadedProjects.find((proj) => proj.id === newTodo.pid);
-
+	
 	let todos = project.getTodos();
 	let idx = todos.findIndex((todo) => todo.id === newTodo.id);
 	todos[idx] = newTodo;
-
+	
 	saveProjects(LoadedProjects);
+}
+
+export function getTodos(projectId) {
+	let LoadedProjects = loadProjects();
+	
+	let project = LoadedProjects.find((proj) => proj.id === projectId);
+
+	return project.getTodos();
 }

@@ -1,6 +1,5 @@
 main {
 	height: 100%;
-	width: var(--main-width);
 	padding: 32px;
 	
 	display: flex;
@@ -38,10 +37,15 @@ input {
 
 #delete {
 	width: 50px;
-	text-align: center;
-	color: red;
 	font-weight: bold;
 	font-size: 1.5rem;
+	flex-shrink: 0;
+	text-align: center;
+	padding: 12px;
+}
+
+#delete::before {
+	content: "\f2ed";
 }
 
 #todoList {
