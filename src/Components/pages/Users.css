@@ -56,13 +56,17 @@ input {
 	overflow-y: auto;
 	height: 100%;
 	width: 100%;
+
+	scrollbar-width: thin;
+	scroll-behavior: smooth;
+	scrollbar-color: white #FFFFFF00;
 }
 
 .todo {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: var(--side-color);
+	background-color: var(--section-color);
 	padding: 18px 20px;
   transition: 75ms ease-out;
 }
@@ -84,10 +88,13 @@ input {
 	text-decoration: line-through;
 	filter: brightness(50%);
 }
+.todo .fa-star {
+	padding-right: 0;
+}
 
 .fa-circle,
 .fa-star {
-	font-size: 1.2rem;
+	font-size: 1rem;
 }
 
 .done.fa-circle::after,
@@ -133,7 +140,7 @@ input {
 /* ----------------------------------------- */
 
 #addTodo {
-	background-color: var(--side-color);
+	background-color: var(--section-color);
 	color: var(--page-color);
 	height: 3rem;
 	width: 100%;

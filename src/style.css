@@ -19,7 +19,8 @@
   --nav-width: 17rem;
   --editor-width: 20rem;
   --main-width: calc(100vw - var(--nav-width) + var(--editor-width));
-  --button-hover: #353535;
+  --section-color: #2f2f2f;
+  --button-hover: #373737;
   --block-before-color: #76b9ed;
   --hr-color: #414141;
   --page-color: #8976cc;
