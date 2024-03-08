@@ -18,6 +18,10 @@ module.exports = {
         test: /\.(tff|woff)$/i,
         type: 'asset/resource',
       },
+      {
+        test: /\.(jpg)$/i,
+        type: 'asset/resource',
+      },
     ],
   },
   devServer: {

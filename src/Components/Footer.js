@@ -21,8 +21,8 @@ function loadFooter() {
 	githubPage.classList.add("credit-a");
   githubPage.target = "_blank";
 
-	const githubImage = document.createElement("img");
-	githubImage.src = "./assets/images/pizza.jpg";
+	const githubImage = new Image();
+	githubImage.src = import("../assets/images/pizza.jpg");
 	githubImage.alt = "my profile";
 
 	githubPage.appendChild(githubImage);
