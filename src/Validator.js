@@ -4,8 +4,8 @@
  * @returns {string}
  */
 export function textLengthValidator(text) {
-  if (text.length > 16) {
-    return text.substring(0, 16) + "...";
+  if (text.length > 22) {
+    return text.substring(0, 22) + "...";
   }
 
   return text;

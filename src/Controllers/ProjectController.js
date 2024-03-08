@@ -57,16 +57,22 @@ export function addProject(name) {
 
 export function editProject(newProject) {
 	let LoadedProjects = loadProjects();
-
+	
 	let idx = LoadedProjects.findIndex((project) => project.id === newProject.id);
 	LoadedProjects[idx] = newProject;
-
+	
 	saveProjects(LoadedProjects);
+}
+
+export function getProjectById(projectId) {
+	let LoadedProjects = loadProjects();
+	
+	return LoadedProjects.find((proj) => proj.id === projectId);
 }
 
 export function removeProject(projectId) {
 	let LoadedProjects = loadProjects();
-
+	
 	saveProjects(LoadedProjects.filter((project) => project.id !== projectId));
 }
 

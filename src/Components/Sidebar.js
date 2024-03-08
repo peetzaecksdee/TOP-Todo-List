@@ -27,7 +27,7 @@
 }
 
 import "./Sidebar.css";
-import { addProject } from "../Controllers/ProjectController";
+import { addProject, getProjectById } from "../Controllers/ProjectController";
 import {
 	renderProjects,
 	renderMainProjectPage,
@@ -69,10 +69,10 @@ export default function () {
 		const newProjectbtn = document.querySelector(
 			`[data-id="${newProject.id}"]`
 		);
-		renderUserProjectPage(newProject);
+		renderUserProjectPage(newProject.id);
 		setActive(newProjectbtn);
 
-		const titleInput = document.querySelector('#titleInput');
+		const titleInput = document.querySelector("#titleInput");
 		titleInput.focus();
 		titleInput.select();
 	});

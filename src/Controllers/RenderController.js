@@ -4,7 +4,7 @@ import DefaultPage from "../Components/pages/Default.js";
 import UserPage from "../Components/pages/Users.js";
 import Editor from "../Components/Editor.js";
 
-import { getTodos, loadProjects } from "./ProjectController.js";
+import { getTodos, loadProjects, getProjectById } from "./ProjectController.js";
 import { ProjectButton, TodoButton } from "../utils";
 import { textLengthValidator } from "../Validator.js";
 
@@ -29,28 +29,33 @@ export function renderTodos(projectId) {
 }
 
 export function renderEditor(Todo) {
-	Editor(Todo);
 	const EditorTab = document.querySelector(".editor");	
-	if (Todo.id != EditorTab.dataset.selId || EditorTab.dataset.selId === undefined) {
-		EditorTab.dataset.selId = Todo.id;
-		EditorTab.classList.add("active");
-	} else {
-		EditorTab.textContent = "";
-		EditorTab.classList.remove("active");
-		EditorTab.dataset.selId = "";
-	}	
+	if (Todo !== null) {
+		Editor(Todo);
+		if (Todo.id != EditorTab.dataset.selId || EditorTab.dataset.selId === undefined) {
+			EditorTab.dataset.selId = Todo.id;
+			EditorTab.classList.add("active");
+			return;
+		}
+	}
+
+	EditorTab.textContent = "";
+	EditorTab.classList.remove("active");
+	EditorTab.dataset.selId = "";
 }
 
-export function renderUserProjectPage(project) {
+export function renderUserProjectPage(projectId) {
+	renderEditor(null);
 	const main = document.querySelector("main");
 	main.classList.add("user");
 	main.classList.remove("main");
 	main.textContent = "";
-
-	UserPage(project);
+	
+	UserPage(getProjectById(projectId));
 }
 
 export function renderMainProjectPage() {
+	renderEditor(null);
 	const main = document.querySelector("main");
 	main.classList.add("main");
 	main.classList.remove("user");
@@ -72,7 +77,7 @@ export function renderProjects() {
 			project.id
 		);
 		btn.addEventListener("click", () => {
-			renderUserProjectPage(project);
+			renderUserProjectPage(project.id);
 		});
 		userProjects.appendChild(btn);
 	});
