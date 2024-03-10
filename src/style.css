@@ -42,6 +42,7 @@ button {
   width: 100%;
   border-radius: 8px;
   position: relative;
+  transition: 75ms ease-out;
   font-family: 'Nunito';
 }
 

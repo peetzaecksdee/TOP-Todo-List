@@ -3,6 +3,7 @@ import "./Editor.css";
 import { format, formatDistance, differenceInDays } from "date-fns";
 import { removeTodo, editTodo } from "../Controllers/ProjectController";
 import { renderEditor, renderTodos } from "../Controllers/RenderController";
+import { ButtonAnimation } from "../utils";
 
 function TodoMainDiv(Todo) {
 	const ParentTodo = document.querySelector(`[data--tid="${Todo.id}"]`);
@@ -75,6 +76,25 @@ function TodoMainDiv(Todo) {
 	return TodoMainDiv;
 }
 
+function secondaryButton(icon, text) {
+	const container = document.createElement("button");
+	container.classList.add("todo-secondary")
+	container.addEventListener("mousedown", () => ButtonAnimation(container, 0.98));
+	container.addEventListener("mouseout", () => ButtonAnimation(container, 1));
+	container.addEventListener("click", () => ButtonAnimation(container, 1));
+
+	const Btn = document.createElement("span");
+	Btn.textContent = text;
+
+	const i = document.createElement("i");
+	i.classList.add("fa-regular", icon, "inactive");
+
+	container.appendChild(i);
+	container.appendChild(Btn);
+
+	return container;
+}
+
 export default function (Todo) {
 	const ProjectId = Todo.pid;
 
@@ -84,7 +104,18 @@ export default function (Todo) {
 	const MainTodoContainer = document.createElement("div");
 	MainTodoContainer.classList.add("main-todo-container");
 
+	const toMyDayBtn = secondaryButton("fa-star", "Add to My Day");
+
+	const dueDateBtn = secondaryButton("fa-calendar-days", "Add due date");
+
+	const addNoteBox = document.createElement("textarea");
+	addNoteBox.classList.add("note");
+	addNoteBox.placeholder = "Add note";
+
 	MainTodoContainer.appendChild(TodoMainDiv(Todo));
+	MainTodoContainer.appendChild(toMyDayBtn);
+	MainTodoContainer.appendChild(dueDateBtn);
+	MainTodoContainer.appendChild(addNoteBox);
 
 	const extraContent = document.createElement("div");
 	extraContent.classList.add("extra-info");

@@ -68,7 +68,6 @@ input {
 	align-items: center;
 	background-color: var(--section-color);
 	padding: 18px 20px;
-  transition: 75ms ease-out;
 }
 
 /* The abomination of styling */

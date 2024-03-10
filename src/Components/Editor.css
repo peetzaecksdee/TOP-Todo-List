@@ -3,8 +3,7 @@
   background-color: var(--side-color);
   flex-shrink: 0;
   overflow: hidden;
-  padding: 16px 0;
-
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -20,12 +19,15 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 8px;
   width: 100%;
+  padding: 16px;
 }
 
+.todo-secondary,
 .main-todo-container > div {
   background-color: var(--section-color);
-  width: 85%;
+  width: 100%;
   border-radius: 8px;
   padding: 12px;
 }
@@ -45,6 +47,22 @@
   padding-right: 0;
 }
 
+.todo-secondary {
+  display: flex;
+  align-items: center;
+}
+
+.note {
+  background: none;
+  background-color: var(--section-color);
+  width: 100%;
+  padding: 12px;
+  resize: none;
+  border: none;
+  border-radius: 8px;
+  color: white;
+}
+
 .extra-info {
   width: 100%;
   display: flex;
@@ -61,6 +79,10 @@
 .extra-info span,
 .extra-info #delete {
   font-size: .85rem;
+}
+
+.extra-info #delete {
+  height: 50px;
 }
 
 .extra-info #delete:hover {
