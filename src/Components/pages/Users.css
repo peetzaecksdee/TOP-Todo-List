@@ -98,7 +98,7 @@ input {
 }
 
 .done.fa-circle::after,
-.fa-circle:not(.done):hover::after {
+.fa-circle:not(.done, .inactive):hover::after {
 	content: "\f00c";
 	font-family: FontAwesome;
 	position: relative;
@@ -112,27 +112,27 @@ input {
 	color: var(--side-color);
 }
 
-.done.fa-circle:focus::after {
+:not(.inactive).done.fa-circle:focus::after {
 	content: "";
 	padding-right: 10.5px;
 }
 
-:not(.done).fa-circle.fa-solid:hover::after {
+:not(.done, .inactive).fa-circle.fa-solid:hover::after {
 	color: var(--side-color);
 }
 
-.fa-star:not(.fa-regular):focus,
-.fa-star:not(.fa-solid):focus {
+.fa-star:not(.fa-regular, .inactive):focus,
+.fa-star:not(.fa-solid, .inactive):focus {
 	color: white;
 }
 
 .done.fa-circle,
-.fa-star:not(.fa-solid):hover,
+.fa-star:not(.fa-solid, .inactive):hover,
 .fa-star:not(.fa-regular) {
 	color: var(--page-color);
 }
 
-:not(.done).fa-circle:hover,
+:not(.done, .inactive).fa-circle:hover,
 .done.fa-circle {
 	padding-right: 1.5px;
 }

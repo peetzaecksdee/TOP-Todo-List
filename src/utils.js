@@ -48,15 +48,6 @@ export function TodoButton(todo) {
 	let done = todo.isDone();
 	Todo.classList.add("todo");
 	Todo.dataset.Tid = todo.id;
-	Todo.dataset.done = done;
-	Todo.dataset.starred = starred;
-
-	const starAnimation =
-		([{ fontSize: ".75rem" }, { fontSize: "1.25rem" }],
-		{
-			duration: 125,
-			iterations: 1,
-		});
 
 	function toggleStarred() {
 		if (starred) {
@@ -64,13 +55,17 @@ export function TodoButton(todo) {
 			star.classList.add("fa-regular");
 			starred = false;
 		} else {
-			star.animate(starAnimation);
+			star.animate([{ fontSize: ".75rem" }, { fontSize: "1.25rem" }], {
+				duration: 125,
+				iterations: 1,
+			});
 			star.classList.remove("fa-regular");
 			star.classList.add("fa-solid");
 			starred = true;
 		}
 		Todo.dataset.starred = starred;
 		todo.setStarred(starred);
+		Todo.dispatchEvent(new CustomEvent("starred"));
 		editTodo(todo);
 	}
 
@@ -110,6 +105,7 @@ export function TodoButton(todo) {
 		}
 		Todo.dataset.done = done;
 		todo.setDone(done);
+		Todo.dispatchEvent(new CustomEvent("done"), done);
 		editTodo(todo);
 	});
 
@@ -128,7 +124,10 @@ export function TodoButton(todo) {
 		ButtonAnimation(Todo, 0.99, isBtnElem(elem))
 	);
 	Todo.addEventListener("mouseout", () => ButtonAnimation(Todo, 1));
-	Todo.addEventListener("click", () => {
+	Todo.addEventListener("click", (event) => {
+		if (!isBtnElem(event)) {
+			return;
+		}
 		renderEditor(todo);
 		ButtonAnimation(Todo, 1);
 	});
