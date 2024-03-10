@@ -1,10 +1,10 @@
 import "./Editor.css";
 
 import { format, formatDistance, differenceInDays } from "date-fns";
-import { removeTodo } from "../Controllers/ProjectController";
-import { renderEditor, renderTodos } from "../Controllers/RenderController";
+import { removeTodo, editTodo } from "../Controllers/ProjectController";
+import { renderEditor } from "../Controllers/RenderController";
 
-function TodoMainDiv() {
+function TodoMainDiv(Todo) {
   const TodoMainDiv = document.createElement("div");
   TodoMainDiv.classList.add("todo-main");
 	let starred = Todo.isStarred();
@@ -77,14 +77,6 @@ function TodoMainDiv() {
 	const star = document.createElement("i");
 	star.classList.add(starred ? "fa-solid" : "fa-regular", "fa-star");
 	star.addEventListener("click", () => toggleStarred());
-}
-
-export default function(Todo) {
-	const EditorTab = document.querySelector(".editor");
-  EditorTab.textContent = "";
-
-  const MainTodoContainer = document.createElement("div");
-  MainTodoContainer.classList.add("main-todo-container")
 
 	div.appendChild(circle);
 	div.appendChild(textSpan);
@@ -92,7 +84,19 @@ export default function(Todo) {
 	TodoMainDiv.appendChild(div);
 	TodoMainDiv.appendChild(star);
 
-  MainTodoContainer.appendChild(TodoMainDiv());
+	return TodoMainDiv;
+}
+
+export default function(Todo) {
+	const ProjectId = Todo.pid;
+
+	const EditorTab = document.querySelector(".editor");
+  EditorTab.textContent = "";
+
+  const MainTodoContainer = document.createElement("div");
+  MainTodoContainer.classList.add("main-todo-container")
+
+  MainTodoContainer.appendChild(TodoMainDiv(Todo));
 
   const extraContent = document.createElement("div");
   extraContent.classList.add("extra-info");
@@ -109,8 +113,8 @@ export default function(Todo) {
   deleteBtn.id = "delete";
   deleteBtn.addEventListener("click", () => {
     removeTodo(Todo);
-    renderTodos(Todo.pid);
-    renderEditor(Todo);
+    renderTodos(ProjectId);
+    renderEditor(null);
   });
   
   extraContent.appendChild(createdDate);
