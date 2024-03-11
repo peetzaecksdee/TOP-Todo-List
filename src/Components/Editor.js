@@ -1,8 +1,18 @@
 import "./Editor.css";
 
-import { format, formatDistance, differenceInDays, differenceInMinutes } from "date-fns";
+import {
+	format,
+	formatDistance,
+	differenceInDays,
+	differenceInMinutes,
+} from "date-fns";
 import { removeTodo, editTodo } from "../Controllers/ProjectController";
-import { renderEditor, renderTodos, updateTodosAmount, ButtonAnimation } from "../Controllers/RenderController";
+import {
+	renderEditor,
+	renderTodos,
+	updateTodosAmount,
+	ButtonAnimation,
+} from "../Controllers/RenderController";
 import { textLengthValidator } from "../Validator";
 
 function TodoMainDiv(Todo) {
@@ -57,7 +67,11 @@ function TodoMainDiv(Todo) {
 	if (done) {
 		circle.classList.add("done");
 	}
-	circle.classList.add(done ? "fa-solid" : "fa-regular", "fa-circle", "inactive");
+	circle.classList.add(
+		done ? "fa-solid" : "fa-regular",
+		"fa-circle",
+		"inactive"
+	);
 
 	const textSpan = document.createElement("input");
 	textSpan.value = Todo.getTitle();
@@ -76,7 +90,11 @@ function TodoMainDiv(Todo) {
 	});
 
 	const star = document.createElement("i");
-	star.classList.add(starred ? "fa-solid" : "fa-regular", "fa-star", "inactive");
+	star.classList.add(
+		starred ? "fa-solid" : "fa-regular",
+		"fa-star",
+		"inactive"
+	);
 
 	ParentTodo.addEventListener("done", () => toggleDone());
 	ParentTodo.addEventListener("starred", () => toggleStarred());
@@ -88,25 +106,6 @@ function TodoMainDiv(Todo) {
 	TodoMainDiv.appendChild(star);
 
 	return TodoMainDiv;
-}
-
-function secondaryButton(icon, text) {
-	const container = document.createElement("button");
-	container.classList.add("todo-secondary");
-	container.addEventListener("mousedown", () => ButtonAnimation(container, 0.98));
-	container.addEventListener("mouseout", () => ButtonAnimation(container, 1));
-	container.addEventListener("click", () => ButtonAnimation(container, 1));
-
-	const Btn = document.createElement("span");
-	Btn.textContent = text;
-
-	const i = document.createElement("i");
-	i.classList.add("fa-regular", icon, "inactive");
-
-	container.appendChild(i);
-	container.appendChild(Btn);
-
-	return container;
 }
 
 export default function (Todo) {
@@ -126,8 +125,6 @@ export default function (Todo) {
 	const MainTodoContainer = document.createElement("div");
 	MainTodoContainer.classList.add("main-todo-container");
 
-	const toMyDayBtn = secondaryButton("fa-star", "Add to My Day");
-
 	const dueDateBtn = document.createElement("input");
 	dueDateBtn.type = "date";
 	dueDateBtn.classList = "due-date";
@@ -143,9 +140,24 @@ export default function (Todo) {
 	const addNoteBox = document.createElement("textarea");
 	addNoteBox.classList.add("note");
 	addNoteBox.placeholder = "Add note";
+	addNoteBox.value = Todo.getNotes();
+	setTimeout(() => {
+		addNoteBox.style.height = `${addNoteBox.scrollHeight}px`;
+	}, 100);
+	addNoteBox.addEventListener("keydown", () => {
+		addNoteBox.style.height = "auto";
+		addNoteBox.style.height = `${addNoteBox.scrollHeight}px`;
+	});
+	addNoteBox.addEventListener("keyup", () => {
+		addNoteBox.style.height = "auto";
+		addNoteBox.style.height = `${addNoteBox.scrollHeight}px`;
+	});
+	addNoteBox.addEventListener("focusout", () => {
+		Todo.setNotes(addNoteBox.value);
+		editTodo(Todo);
+	});
 
 	MainTodoContainer.appendChild(TodoMainDiv(Todo));
-	MainTodoContainer.appendChild(toMyDayBtn);
 	MainTodoContainer.appendChild(dueDateBtn);
 	MainTodoContainer.appendChild(addNoteBox);
 
@@ -177,5 +189,4 @@ export default function (Todo) {
 
 	EditorTab.appendChild(MainTodoContainer);
 	EditorTab.appendChild(extraContent);
-
 }
