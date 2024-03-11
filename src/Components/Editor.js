@@ -3,15 +3,14 @@ import "./Editor.css";
 import {
 	format,
 	formatDistance,
-	differenceInDays,
-	differenceInMinutes,
+	isToday,
+	isPast,
 } from "date-fns";
 import { removeTodo, editTodo } from "../Controllers/ProjectController";
 import {
 	renderEditor,
 	renderTodos,
 	updateTodosAmount,
-	ButtonAnimation,
 } from "../Controllers/RenderController";
 import { textLengthValidator } from "../Validator";
 
@@ -110,7 +109,7 @@ function TodoMainDiv(Todo) {
 
 export default function (Todo) {
 	function addLateifPastDueDate() {
-		if (differenceInMinutes(dueDateBtn.value, Date.now()) < 0) {
+		if (!isToday(dueDateBtn.value) && isPast(dueDateBtn.value)) {
 			dueDateBtn.classList.add("late");
 		} else {
 			dueDateBtn.classList.remove("late");
@@ -165,7 +164,7 @@ export default function (Todo) {
 	extraContent.classList.add("extra-info");
 	const createdDate = document.createElement("span");
 	const todoDate = Todo.getDate();
-	if (differenceInDays(Date.now(), todoDate) < 1) {
+	if (isToday(Date.now(), todoDate)) {
 		createdDate.textContent = `Created ${formatDistance(
 			Date.now(),
 			todoDate

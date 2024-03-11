@@ -4,8 +4,17 @@ import DefaultPage from "../Components/pages/Default.js";
 import UserPage from "../Components/pages/Users.js";
 import Editor from "../Components/Editor.js";
 
-import { getTodos, loadProjects, getProjectById } from "./ProjectController.js";
+import {
+	getTodos,
+	editTodo,
+	loadProjects,
+	getProjectById,
+	getTodoswithDueDate,
+	getOngoingTodos,
+	getAllTodos,
+} from "./ProjectController.js";
 import { textLengthValidator } from "../Validator.js";
+import { isFuture, isToday } from "date-fns";
 
 export function ButtonAnimation(btn, scale, condition) {
 	if (condition === false) {
@@ -94,6 +103,7 @@ export function TodoButton(todo) {
 		todo.setDone(done);
 		Todo.dispatchEvent(new CustomEvent("done"), done);
 		editTodo(todo);
+		updateTodosAmount(todo.pid);
 	});
 
 	const textSpan = document.createElement("span");
@@ -135,7 +145,7 @@ export function renderTodos(projectId) {
 	const todos = getTodos(projectId);
 	todos.forEach((todo) => {
 		TodoList.appendChild(TodoButton(todo));
-	})
+	});
 }
 
 export function ProjectButton(opac, icon, text, id) {
@@ -163,15 +173,18 @@ export function ProjectButton(opac, icon, text, id) {
 
 	Project.appendChild(div);
 	Project.appendChild(count);
-	
+
 	return Project;
 }
 
 export function renderEditor(Todo) {
-	const EditorTab = document.querySelector(".editor");	
+	const EditorTab = document.querySelector(".editor");
 	if (Todo !== null) {
 		Editor(Todo);
-		if (Todo.id != EditorTab.dataset.selId || EditorTab.dataset.selId === undefined) {
+		if (
+			Todo.id != EditorTab.dataset.selId ||
+			EditorTab.dataset.selId === undefined
+		) {
 			EditorTab.dataset.selId = Todo.id;
 			EditorTab.classList.add("active");
 			return;
@@ -184,8 +197,11 @@ export function renderEditor(Todo) {
 }
 
 export function updateTodosAmount(projectId) {
-	const projectCount = document.querySelector(`[data-id="${projectId}"]`).querySelector("#count");
-	projectCount.textContent = getProjectById(projectId).getTodos().length;
+	const projectCount = document
+		.querySelector(`[data-id="${projectId}"]`)
+		.querySelector("#count");
+	const length = getOngoingTodos(projectId).length;
+	projectCount.textContent = length > 0 ? length : "";
 }
 
 export function renderUserProjectPage(projectId) {
@@ -194,18 +210,18 @@ export function renderUserProjectPage(projectId) {
 	main.classList.add("user");
 	main.classList.remove("main");
 	main.textContent = "";
-	
+
 	UserPage(getProjectById(projectId));
 }
 
-export function renderMainProjectPage() {
+export function renderMainProjectPage(page) {
 	renderEditor(null);
 	const main = document.querySelector("main");
 	main.classList.add("main");
 	main.classList.remove("user");
 	main.textContent = "";
 
-	DefaultPage();
+	DefaultPage(page);
 }
 
 export function renderProjects() {
@@ -239,9 +255,51 @@ export function renderProjects() {
 	});
 }
 
+export function renderMyDay() {
+	const TodoList = document.querySelector("#todoList");
+	TodoList.textContent = "";
+	getTodoswithDueDate().forEach((todo) => {
+		if (isToday(todo.getDueDate())) {
+			const Btn = TodoButton(todo);
+			Btn.querySelector(".fa-circle").addEventListener("click", () => {
+				renderMyDay();
+			});
+			TodoList.appendChild(Btn);
+		}
+	});
+}
+
+export function renderPlanned() {
+	const TodoList = document.querySelector("#todoList");
+	TodoList.textContent = "";
+	getTodoswithDueDate().forEach((todo) => {
+		if (isToday(todo.getDueDate()) || isFuture(todo.getDueDate())) {
+			const Btn = TodoButton(todo);
+			Btn.querySelector(".fa-circle").addEventListener("click", () => {
+				renderPlanned();
+			});
+			TodoList.appendChild(Btn);
+		}
+	});
+}
+
+export function renderStarred() {
+	const TodoList = document.querySelector("#todoList");
+	TodoList.textContent = "";
+	getAllTodos().forEach((todo) => {
+		if (todo.isStarred() && !todo.isDone()) {
+			const Btn = TodoButton(todo);
+			Btn.querySelector(".fa-circle").addEventListener("click", () => {
+				renderStarred();
+			});
+			TodoList.appendChild(Btn);
+		}
+	});
+}
+
 export function init() {
 	const editor = document.createElement("div");
-	editor.classList.add("editor")
+	editor.classList.add("editor");
 
 	const content = document.querySelector("#content");
 	content.appendChild(Sidebar());
@@ -250,6 +308,6 @@ export function init() {
 	const body = document.querySelector("body");
 	body.appendChild(Footer());
 
-	renderMainProjectPage();
+	renderMainProjectPage("My Day");
 	renderProjects();
 }

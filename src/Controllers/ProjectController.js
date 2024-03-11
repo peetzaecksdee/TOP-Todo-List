@@ -1,6 +1,7 @@
 import Project from "../Objects/Project.js";
 import Todo from "../Objects/Todo.js";
 import { saveData, loadData } from "./StorageController.js";
+import { isFuture, isToday } from "date-fns";
 
 export function loadProjects() {
 	let projectsData = JSON.parse(loadData("projects")) || [];
@@ -58,22 +59,22 @@ export function addProject(name) {
 
 export function editProject(newProject) {
 	let LoadedProjects = loadProjects();
-	
+
 	let idx = LoadedProjects.findIndex((project) => project.id === newProject.id);
 	LoadedProjects[idx] = newProject;
-	
+
 	saveProjects(LoadedProjects);
 }
 
 export function getProjectById(projectId) {
 	let LoadedProjects = loadProjects();
-	
+
 	return LoadedProjects.find((proj) => proj.id === projectId);
 }
 
 export function removeProject(projectId) {
 	let LoadedProjects = loadProjects();
-	
+
 	saveProjects(LoadedProjects.filter((project) => project.id !== projectId));
 }
 
@@ -106,17 +107,17 @@ export function removeTodo(todo) {
 	let LoadedProjects = loadProjects();
 
 	let project = LoadedProjects.find((proj) => proj.id === todo.pid);
-	
+
 	project.removeTodo(todo.id);
-	
+
 	saveProjects(LoadedProjects);
 }
 
 export function editTodo(newTodo) {
 	let LoadedProjects = loadProjects();
-	
+
 	let project = LoadedProjects.find((proj) => proj.id === newTodo.pid);
-	
+
 	let todos = project.getTodos();
 	let idx = todos.findIndex((todo) => todo.id === newTodo.id);
 	todos[idx] = newTodo;
@@ -126,8 +127,40 @@ export function editTodo(newTodo) {
 
 export function getTodos(projectId) {
 	let LoadedProjects = loadProjects();
-	
+
 	let project = LoadedProjects.find((proj) => proj.id === projectId);
 
 	return project.getTodos();
+}
+
+export function getOngoingTodos(projectId) {
+	return getTodos(projectId).filter((todo) => todo.isDone() === false);
+}
+
+export function getAllTodos() {
+	let LoadedProjects = loadProjects();
+	let Todos = [];
+
+	LoadedProjects.forEach((proj) => {
+		proj.getTodos().forEach((todo) => {
+			Todos.push(todo);
+		});
+	});
+
+	return Todos;
+}
+
+export function getTodoswithDueDate() {
+	let LoadedProjects = loadProjects();
+	let Todos = [];
+
+	LoadedProjects.forEach((proj) => {
+		getOngoingTodos(proj.id).filter((todo) => {
+			if (isFuture(todo.getDueDate()) || isToday(todo.getDueDate())) {
+				Todos.push(todo);
+			}
+		});
+	});
+
+	return Todos;
 }
