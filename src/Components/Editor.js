@@ -4,9 +4,11 @@ import { format, formatDistance, differenceInDays } from "date-fns";
 import { removeTodo, editTodo } from "../Controllers/ProjectController";
 import { renderEditor, renderTodos } from "../Controllers/RenderController";
 import { ButtonAnimation } from "../utils";
+import { textLengthValidator } from "../Validator";
 
 function TodoMainDiv(Todo) {
 	const ParentTodo = document.querySelector(`[data--tid="${Todo.id}"]`);
+	const ParentTodoText = ParentTodo.querySelector("span");
 
 	const TodoMainDiv = document.createElement("div");
 	TodoMainDiv.classList.add("todo-main");
@@ -58,8 +60,21 @@ function TodoMainDiv(Todo) {
 	}
 	circle.classList.add(done ? "fa-solid" : "fa-regular", "fa-circle", "inactive");
 
-	const textSpan = document.createElement("span");
-	textSpan.textContent = Todo.getTitle();
+	const textSpan = document.createElement("input");
+	textSpan.value = Todo.getTitle();
+	textSpan.addEventListener("keypress", (event) => {
+		if (event.key === "Enter") {
+			textSpan.blur();
+			Todo.setTitle(textSpan.value);
+			ParentTodoText.textContent = textLengthValidator(textSpan.value);
+			editTodo(Todo);
+		}
+	});
+	textSpan.addEventListener("blur", () => {
+		Todo.setTitle(textSpan.value);
+		ParentTodoText.textContent = textLengthValidator(textSpan.value);
+		editTodo(Todo);
+	});
 
 	const star = document.createElement("i");
 	star.classList.add(starred ? "fa-solid" : "fa-regular", "fa-star", "inactive");
@@ -78,7 +93,7 @@ function TodoMainDiv(Todo) {
 
 function secondaryButton(icon, text) {
 	const container = document.createElement("button");
-	container.classList.add("todo-secondary")
+	container.classList.add("todo-secondary");
 	container.addEventListener("mousedown", () => ButtonAnimation(container, 0.98));
 	container.addEventListener("mouseout", () => ButtonAnimation(container, 1));
 	container.addEventListener("click", () => ButtonAnimation(container, 1));
@@ -106,7 +121,11 @@ export default function (Todo) {
 
 	const toMyDayBtn = secondaryButton("fa-star", "Add to My Day");
 
-	const dueDateBtn = secondaryButton("fa-calendar-days", "Add due date");
+	const dueDateBtn = document.createElement("input");
+	dueDateBtn.type = "date";
+	dueDateBtn.classList = "due-date";
+	dueDateBtn.classList.add("fa-calendar-days");
+	dueDateBtn.textContent = "Add due date";
 
 	const addNoteBox = document.createElement("textarea");
 	addNoteBox.classList.add("note");
@@ -144,4 +163,5 @@ export default function (Todo) {
 
 	EditorTab.appendChild(MainTodoContainer);
 	EditorTab.appendChild(extraContent);
+
 }

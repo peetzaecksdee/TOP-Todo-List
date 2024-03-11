@@ -42,6 +42,12 @@
   font-weight: bold;
 }
 
+.todo-main:has(.done) input {
+  text-decoration: line-through;
+  font-style: italic;
+  filter: brightness(50%);
+}
+
 .todo-main .fa-star {
   padding-top: 4.5px;
   padding-right: 0;
@@ -52,6 +58,7 @@
   align-items: center;
 }
 
+.due-date,
 .note {
   background: none;
   background-color: var(--section-color);
