@@ -11,8 +11,9 @@ import {
 	renderMainProjectPage,
 	setActive,
 	renderTodos,
+	updateTodosAmount,
+	TodoButton,
 } from "../../Controllers/RenderController";
-import { TodoButton } from "../../utils";
 
 function createUserPage(project) {
 	const projectText = document
@@ -86,6 +87,7 @@ function createUserPage(project) {
 				return;
 			}
 			todoList.appendChild(TodoButton(createTodo(project.id, [addTodoBtn.value, Date.now()])))
+			updateTodosAmount(project.id);
 			addTodoBtn.value = "";
 		}
 	});

@@ -2,8 +2,7 @@ import "./Editor.css";
 
 import { format, formatDistance, differenceInDays, differenceInMinutes } from "date-fns";
 import { removeTodo, editTodo } from "../Controllers/ProjectController";
-import { renderEditor, renderTodos } from "../Controllers/RenderController";
-import { ButtonAnimation } from "../utils";
+import { renderEditor, renderTodos, updateTodosAmount, ButtonAnimation } from "../Controllers/RenderController";
 import { textLengthValidator } from "../Validator";
 
 function TodoMainDiv(Todo) {
@@ -133,7 +132,6 @@ export default function (Todo) {
 	dueDateBtn.type = "date";
 	dueDateBtn.classList = "due-date";
 	dueDateBtn.textContent = "Add due date";
-	console.log(Todo.getDueDate());
 	dueDateBtn.value = Todo.getDueDate();
 	addLateifPastDueDate();
 	dueDateBtn.addEventListener("change", () => {
@@ -171,6 +169,7 @@ export default function (Todo) {
 		removeTodo(Todo);
 		renderTodos(ProjectId);
 		renderEditor(null);
+		updateTodosAmount(ProjectId);
 	});
 
 	extraContent.appendChild(createdDate);

@@ -27,66 +27,66 @@
 }
 
 import "./Sidebar.css";
-import { addProject, getProjectById } from "../Controllers/ProjectController";
+import { addProject } from "../Controllers/ProjectController";
 import {
 	renderProjects,
 	renderMainProjectPage,
 	renderUserProjectPage,
 	setActive,
+	ProjectButton,
 } from "../Controllers/RenderController";
-import { ProjectButton } from "../utils";
 
 export default function () {
 	const nav = document.createElement("nav");
-
+	
 	const projects = document.createElement("div");
 	projects.id = "projects";
-
+	
 	const defaultProjects = document.createElement("div");
 	defaultProjects.id = "defaultProjects";
-
+	
 	const myDay = ProjectButton("fa-regular", "fa-sun", "My Day", -1);
 	myDay.classList.add("active");
 	const starred = ProjectButton("fa-regular", "fa-star", "Starred", -2);
 	const planned = ProjectButton("fa-solid", "fa-list-check", "Planned", -3);
-
+	
 	myDay.addEventListener("click", () => renderMainProjectPage());
 	starred.addEventListener("click", () => renderMainProjectPage());
 	planned.addEventListener("click", () => renderMainProjectPage());
-
+	
 	const hr = document.createElement("hr");
-
+	
 	const userProjects = document.createElement("div");
 	userProjects.id = "userProjects";
-
+	
 	const addProjectBtn = document.createElement("button");
 	addProjectBtn.id = "addProject";
 	addProjectBtn.textContent = "New List";
 	addProjectBtn.addEventListener("click", () => {
 		const newProject = addProject("Untitled List");
 		renderProjects();
-
+		
 		const newProjectbtn = document.querySelector(
 			`[data-id="${newProject.id}"]`
-		);
-		renderUserProjectPage(newProject.id);
-		setActive(newProjectbtn);
-
-		const titleInput = document.querySelector("#titleInput");
-		titleInput.focus();
-		titleInput.select();
-	});
-
-	defaultProjects.appendChild(myDay);
-	defaultProjects.appendChild(starred);
-	defaultProjects.appendChild(planned);
-
-	projects.appendChild(defaultProjects);
-	projects.appendChild(hr);
-	projects.appendChild(userProjects);
-
-	nav.appendChild(projects);
-	nav.appendChild(addProjectBtn);
-
-	return nav;
-}
+			);
+			renderUserProjectPage(newProject.id);
+			setActive(newProjectbtn);
+			
+			const titleInput = document.querySelector("#titleInput");
+			titleInput.focus();
+			titleInput.select();
+		});
+		
+		defaultProjects.appendChild(myDay);
+		defaultProjects.appendChild(starred);
+		defaultProjects.appendChild(planned);
+		
+		projects.appendChild(defaultProjects);
+		projects.appendChild(hr);
+		projects.appendChild(userProjects);
+		
+		nav.appendChild(projects);
+		nav.appendChild(addProjectBtn);
+		
+		return nav;
+	}
