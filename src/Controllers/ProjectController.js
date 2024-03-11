@@ -1,7 +1,7 @@
 import Project from "../Objects/Project.js";
 import Todo from "../Objects/Todo.js";
 import { saveData, loadData } from "./StorageController.js";
-import { isFuture, isToday } from "date-fns";
+import { compareAsc, isFuture, isToday } from "date-fns";
 
 export function loadProjects() {
 	let projectsData = JSON.parse(loadData("projects")) || [];
@@ -162,5 +162,10 @@ export function getTodoswithDueDate() {
 		});
 	});
 
-	return Todos;
+	return Todos.sort((todo1, todo2) =>
+	compareAsc(
+		todo1.getDueDate(),
+		todo2.getDueDate(),
+	)
+);
 }
