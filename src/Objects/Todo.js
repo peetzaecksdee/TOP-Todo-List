@@ -14,12 +14,11 @@ export default function (
 	projectId,
 	title,
 	date,
+	dueDate,
 	notes = "",
 	starred = false,
 	done = false
 ) {
-	const dueDate = Date.now();
-
 	const id = uid;
 	const pid = projectId;
 	const getTitle = () => title;

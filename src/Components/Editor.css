@@ -48,6 +48,10 @@
   filter: brightness(50%);
 }
 
+input[type="date"].late {
+  color: red;
+}
+
 .todo-main .fa-star {
   padding-top: 4.5px;
   padding-right: 0;

@@ -1,6 +1,6 @@
 import "./Editor.css";
 
-import { format, formatDistance, differenceInDays } from "date-fns";
+import { format, formatDistance, differenceInDays, differenceInMinutes } from "date-fns";
 import { removeTodo, editTodo } from "../Controllers/ProjectController";
 import { renderEditor, renderTodos } from "../Controllers/RenderController";
 import { ButtonAnimation } from "../utils";
@@ -111,6 +111,14 @@ function secondaryButton(icon, text) {
 }
 
 export default function (Todo) {
+	function addLateifPastDueDate() {
+		if (differenceInMinutes(dueDateBtn.value, Date.now()) < 0) {
+			dueDateBtn.classList.add("late");
+		} else {
+			dueDateBtn.classList.remove("late");
+		}
+	}
+
 	const ProjectId = Todo.pid;
 
 	const EditorTab = document.querySelector(".editor");
@@ -124,8 +132,15 @@ export default function (Todo) {
 	const dueDateBtn = document.createElement("input");
 	dueDateBtn.type = "date";
 	dueDateBtn.classList = "due-date";
-	dueDateBtn.classList.add("fa-calendar-days");
 	dueDateBtn.textContent = "Add due date";
+	console.log(Todo.getDueDate());
+	dueDateBtn.value = Todo.getDueDate();
+	addLateifPastDueDate();
+	dueDateBtn.addEventListener("change", () => {
+		addLateifPastDueDate();
+		Todo.setDueDate(dueDateBtn.value);
+		editTodo(Todo);
+	});
 
 	const addNoteBox = document.createElement("textarea");
 	addNoteBox.classList.add("note");

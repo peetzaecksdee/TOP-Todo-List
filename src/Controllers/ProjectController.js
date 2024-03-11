@@ -22,6 +22,7 @@ export function loadTodos(project, todos) {
 				todo.title,
 				todo.date,
 				todo.dueDate,
+				todo.notes,
 				todo.starred,
 				todo.done
 			)
@@ -119,7 +120,7 @@ export function editTodo(newTodo) {
 	let todos = project.getTodos();
 	let idx = todos.findIndex((todo) => todo.id === newTodo.id);
 	todos[idx] = newTodo;
-	
+
 	saveProjects(LoadedProjects);
 }
 
